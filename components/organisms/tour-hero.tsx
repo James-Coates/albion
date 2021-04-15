@@ -1,0 +1,166 @@
+import {
+  Box,
+  BoxProps,
+  Container,
+  Grid,
+  Typography,
+} from '@material-ui/core';
+import { up } from 'styled-breakpoints';
+import styled, { css } from 'styled-components';
+import { fill } from '../../theme/helpers';
+import { Button, Svg } from '../atoms';
+import { BackgroundImage } from '../molecules';
+import { ChevronThinDown } from '@styled-icons/entypo/ChevronThinDown';
+import Fade from 'react-reveal/Fade';
+import { linearGradient, rgba } from 'polished';
+import { serializers } from '../../sanity-client.config';
+import BlockContent, {
+  BlockContentProps,
+} from '@sanity/block-content-to-react';
+import { Theme } from 'theme/theme';
+import { TourHeroCard } from '@components/molecules/tour-hero-card';
+
+interface HeroProps extends BoxProps {
+  backgroundImage: string | null;
+  destinations: string;
+  price: number;
+  handleScrollButtonClick?: () => any;
+}
+
+// const transitionWrapperStyles = (theme: Theme, transition: boolean) => css`
+//   height: calc(100vh + 140px);
+// `
+
+const Wrapper = styled(Box)<WrapperProps>`
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+`;
+
+const Backdrop = styled.div`
+  ${fill()}
+  z-index: -1;
+  background-color: rgba(0, 0, 0, 0.4);
+`;
+
+const VideoBg = styled.video`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: auto;
+  height: auto;
+  min-width: 100%;
+  min-height: 100%;
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  z-index: -2;
+`;
+
+const Content = styled(Box)`
+  position: absolute;
+  /* max-width: 720px; */
+  top: 50%;
+  left: 16px;
+  right: 16px;
+  transform: translateY(-50%);
+  text-shadow: 0px 0px 32px rgba(0, 0, 0, 0.4);
+  justify-content: space-around;
+
+  ${({ theme }) => css`
+    ${theme.breakpoints.up('md')} {
+      transform: none;
+      top: 25%;
+      left: 0;
+      right: 0;
+    }
+  `}
+`;
+
+const ContentWrap = styled.div`
+  display: flex;
+  justify-content: space-between;
+  max-width: 1600px;
+  margin: 0 auto;
+`;
+
+const HeaderBox = styled.div`
+  flex: 1 0 40%;
+  max-width: 600px;
+`;
+
+const CardBox = styled.div`
+  flex: 1 0 40%;
+  max-width: 520px;
+  margin-top: 24em;
+`;
+
+const ScrollButton = styled.button`
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  background-color: transparent;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  padding: 16px;
+  color: white;
+`;
+
+const Transition = styled.div`
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 50vh;
+  z-index: -1;
+  ${({ theme }) =>
+    linearGradient({
+      colorStops: [
+        `${rgba(theme.palette.primary.dark, 0)} 0%`,
+        `${rgba(theme.palette.primary.dark, 1)} 100%`,
+      ],
+      toDirection: 'to bottom',
+    })}
+`;
+
+export const TourHero = ({
+  backgroundImage,
+  destinations,
+  price,
+  children,
+  handleScrollButtonClick,
+}: HeroProps) => (
+  <Wrapper color="common.white">
+    <Backdrop />
+    {backgroundImage ? (
+      <BackgroundImage
+        zIndex={-2}
+        src={backgroundImage}
+      ></BackgroundImage>
+    ) : null}
+    <Content>
+      <Container maxWidth="xl">
+        <ContentWrap>
+          <HeaderBox>{children}</HeaderBox>
+          <CardBox>
+            <TourHeroCard
+              heading={destinations}
+              price={price}
+            ></TourHeroCard>
+          </CardBox>
+        </ContentWrap>
+      </Container>
+    </Content>
+
+    <ScrollButton onClick={handleScrollButtonClick}>
+      <Box position="relative">
+        <Typography variant="body2">Find out more</Typography>
+        <ChevronThinDown height={24} />
+      </Box>
+    </ScrollButton>
+  </Wrapper>
+);

@@ -1,43 +1,105 @@
-import useSWR from 'swr';
-import { Heading, Text } from '../components/base';
-import { Box } from '../components/base/box';
-import { CardList } from '../components/card-list';
-import { LandingHero } from '../components/landing-hero';
+import { FC } from 'react';
+import {
+  TourList,
+  LandingHero,
+  TourSlider,
+} from '../components/organisms';
 import { Layout } from '../components/layout';
-import { fetcher } from '../helpers';
-import { Tour } from '../models/tour.model';
 
-export default function Home() {
-  const { data, error } = useSWR<Tour>('/api/tours', fetcher);
+import { getAllTours, getLandingData } from '../api';
+import { Box, Grid, Typography } from '@material-ui/core';
+import styled from 'styled-components';
+import { typography, TypographyProps } from 'styled-system';
+import { InView } from 'react-intersection-observer';
+import { useLayoutDispatch } from '../state/layout/layout-state';
+import { Element, scroller } from 'react-scroll';
+import BlockContent, {
+  BlockContentProps,
+} from '@sanity/block-content-to-react';
+import { serializers, urlFor } from '../sanity-client.config';
+import { FeaturedTours } from '@components/organisms/featured-tours';
 
-  if (error) return <div>Failed to load</div>;
-  if (!data) return <div>Loading...</div>;
+import { Tour } from '../types/tour';
+import { AboutSection } from '@components/organisms/about-section';
+
+interface LandingProps {
+  mainHeading: string;
+  mainCopy?: BlockContentProps;
+  tours: Tour[];
+  featureList: any[];
+}
+
+const PageTitle = styled(Typography)<TypographyProps>`
+  ${typography}
+`;
+
+const Home: FC<LandingProps> = ({
+  tours,
+  mainHeading,
+  mainCopy,
+  featureList,
+}) => {
+  console.log(featureList);
+  const dispatch = useLayoutDispatch();
+
+  const setHeaderFloat = (float: boolean) =>
+    dispatch({
+      type: 'setHeaderFloat',
+      payload: float,
+    });
+
+  function handleLandingViewVisibility(inView: boolean) {
+    setHeaderFloat(!inView);
+  }
+
+  function handleLandingScrollClick() {
+    scroller.scrollTo('start', {
+      duration: 800,
+      delay: 0,
+      smooth: 'easeInOutQuart',
+      offset: 1,
+    });
+  }
+
   return (
-    <Layout>
-      <LandingHero backgroundImage="/images/poster.png">
-        <Heading level={1}>Great British Tours</Heading>
-        <Text>
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-          Quod suscipit quis odit, soluta quos illum iusto. Omnis esse
-          quia voluptatem?
-        </Text>
-      </LandingHero>
-      <Box margin="0 auto" padding="200px 16px" maxWidth="1100px">
-        <Box maxWidth={520} marginBottom={120} marginLeft={160}>
-          {/* <Heading level={2} fontSize={theme.fs.h2}>
-            Our Tours
-          </Heading> */}
-          <Heading type="h2">test</Heading>
-          <Text>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit.
-            Corporis aliquam reiciendis autem asperiores dolorem,
-            voluptatum cupiditate corrupti aspernatur. Assumenda
-            explicabo asperiores nisi adipisci veniam. Aspernatur
-            vitae sequi consectetur expedita cumque?
-          </Text>
-        </Box>
-        <CardList items={data}></CardList>
-      </Box>
+    <Layout headerFloatVariant="filled">
+      <InView as="div" onChange={handleLandingViewVisibility}>
+        <LandingHero
+          mainHeading={mainHeading}
+          mainCopy={mainCopy}
+          backgroundImage="/images/poster.png"
+          handleScrollButtonClick={handleLandingScrollClick}
+        />
+        <Element name="start">
+          <FeaturedTours tours={tours} />
+        </Element>
+      </InView>
+      <AboutSection features={featureList} />
     </Layout>
   );
+};
+
+export async function getStaticProps(): Promise<{
+  props: LandingProps;
+  revalidate: number;
+}> {
+  const {
+    mainHeading = 'Main Heading',
+    mainCopy = null,
+    featureList = [],
+  } = (await getLandingData()) || {};
+  const tours = await getAllTours();
+
+  const res = await fetch(
+    'https://test-albion.checkfront.com/api/3.0/item?packages=true',
+  );
+
+  const json = await res.json();
+
+  return {
+    props: { tours, mainHeading, mainCopy, featureList },
+    revalidate: 1,
+  };
 }
+
+export default Home;
