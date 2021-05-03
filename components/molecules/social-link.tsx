@@ -17,13 +17,13 @@ export const supportedSocial = [
 const getSocialLink = (name: string): JSX.Element | null => {
   switch (name) {
     case 'instagram':
-      return <Instagram height="24" />;
+      return <Instagram height="18" />;
     case 'twitter':
-      return <Twitter height="24" />;
+      return <Twitter height="18" />;
     case 'tripadvisor':
-      return <Tripadvisor height="24" />;
+      return <Tripadvisor height="18" />;
     case 'facebook':
-      return <Facebook height="24" />;
+      return <Facebook height="18" />;
     default:
       return null;
   }

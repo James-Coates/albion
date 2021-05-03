@@ -19,7 +19,7 @@ export const Base = styled.div<HeaderProps>`
   height: 60px;
   ${({ theme }) => css`
     ${theme.breakpoints.up('md')} {
-      height: 80px;
+      height: 64px;
     }
   `}
   ${({ variant, theme }) => handleVariant(variant, theme)}
@@ -28,7 +28,7 @@ export const Base = styled.div<HeaderProps>`
 export const StaticWrapper = styled(Base)`
   position: absolute;
   color: ${({ theme }) => theme.palette.common.white};
-  top: 24px;
+  top: 8px;
 `;
 
 const FixedWrapper = styled(Base)`

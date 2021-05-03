@@ -25,7 +25,7 @@ let theme = createMuiTheme({
     fontFamily: 'Montserrat, Arial, sans-serif',
     h1: {
       fontFamily: 'Belwe Bold',
-      fontSize: 96,
+      fontSize: 80,
       lineHeight: 1,
     },
     h2: {
@@ -59,8 +59,9 @@ let theme = createMuiTheme({
       fontSize: 13,
     },
     button: {
-      fontSize: 12.5,
+      fontSize: 12,
       fontWeight: 700,
+      height: 40,
     },
   },
   props: {

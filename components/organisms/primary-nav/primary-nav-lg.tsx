@@ -28,7 +28,7 @@ export const PrimaryNavLg: React.FC<NavProps> = ({ menuLinks }) => {
           {menuLinks.map((link, i) => (
             <Grid item key={i}>
               <NavItem route={link.route}>
-                <Typography>{link.label}</Typography>
+                <Typography variant="body2">{link.label}</Typography>
               </NavItem>
             </Grid>
           ))}

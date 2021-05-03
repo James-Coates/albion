@@ -3,7 +3,7 @@ import LogoSvg from '../../public/images/albion-touring.svg';
 
 export const Logo = () => {
   return (
-    <Svg height={32}>
+    <Svg height={24}>
       <LogoSvg />
     </Svg>
   );

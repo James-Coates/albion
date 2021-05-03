@@ -23,7 +23,7 @@ const links = [
 
 export const SocialLinks: FC<any> = () => (
   <div>
-    <Grid container spacing={3}>
+    <Grid container spacing={2}>
       {links.map((item, i) =>
         supportedSocial.includes(item.name) ? (
           <Grid item key={i}>

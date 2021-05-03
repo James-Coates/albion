@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { PrimaryNav } from '@components/organisms';
 import { HeaderWrapper, Logo } from '@components/molecules';
 import { Link } from '@components/atoms';
@@ -14,10 +14,15 @@ export interface HeaderProps {
 
 const HeaderContainer = styled.div`
   display: flex;
-  padding: ${({ theme }) => `0 ${theme.spacing(8)}`};
+  padding: ${({ theme }) => `0 ${theme.spacing(2)}`};
   justify-content: space-between;
   align-items: center;
   flex: 1;
+  ${({ theme }) => css`
+    ${theme.breakpoints.up('md')} {
+      padding: ${({ theme }) => `0 ${theme.spacing(8)}`};
+    }
+  `}
 `;
 
 const HeaderLeft = styled.div`
