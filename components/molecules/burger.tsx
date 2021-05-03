@@ -1,7 +1,6 @@
 import { FC } from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
-import { Box } from '../atoms/box';
 import { InferPropTypes } from '../../lib/react/infer-proptypes';
 
 const period = 200;
@@ -25,28 +24,28 @@ const BurgerComponent: FC<BurgerProps> = ({ isActive, ...props }) => (
   </button>
 );
 
-const Top = styled(Box)`
+const Top = styled.div`
   top: 50%;
   right: 0;
   transform: translateY(-8px) scaleX(0.7);
   transform-origin: top right;
 `;
 
-const Middle = styled(Box)`
+const Middle = styled.div`
   top: 50%;
 `;
 
-const Bottom = styled(Box)`
+const Bottom = styled.div`
   top: 50%;
   transform: translateY(8px);
 `;
 
-const Inner = styled(Box)`
+const Inner = styled.div`
   position: relative;
-  height: 32px;
-  width: 32px;
+  height: 28px;
+  width: 28px;
 
-  ${Box} {
+  & > div {
     position: absolute;
     height: 2px;
     width: 100%;
@@ -76,7 +75,7 @@ export const Burger = styled(BurgerComponent)`
     isActive
       ? css`
           ${Inner} {
-            ${Box} {
+            & > div {
               transition: ${period}ms;
               &::before {
                 transition: ${period}ms ${period}ms;
@@ -101,7 +100,7 @@ export const Burger = styled(BurgerComponent)`
         `
       : css`
           ${Inner} {
-            ${Box} {
+            & > div {
               transition: ${period}ms ${period}ms;
               &::before {
                 transition: ${period}ms;

@@ -1,29 +1,30 @@
-import Image from 'next/image';
-import { FC } from 'react';
+import { Box, BoxProps } from '@material-ui/core';
+import Image, { ImageProps } from 'next/image';
+import React from 'react';
 import styled from 'styled-components';
-import { position, PositionProps } from 'styled-system';
 
-interface BackgroundImageProps {
+interface BackgroundImageProps extends BoxProps {
   src: string;
-  zIndex?: number;
-  alt?: string;
+  objectFit?: 'fill' | 'cover';
 }
 
-const Wrapper = styled.div<{ zIndex: number }>`
+const Wrapper = styled(Box)`
   position: absolute;
-  height: 100%;
-  width: 100%;
   top: 0;
   left: 0;
-  overflow: hidden;
-  ${position}
+  right: 0;
+  bottom: 0;
+  z-index: -1;
 `;
 
-export const BackgroundImage: FC<BackgroundImageProps> = ({
-  zIndex,
-  ...props
-}) => (
-  <Wrapper zIndex={zIndex}>
-    <Image {...props} layout="fill" objectFit="cover" />
-  </Wrapper>
-);
+export const BackgroundImage: React.FC<BackgroundImageProps> = ({
+  src,
+  objectFit,
+  ...rest
+}) => {
+  return (
+    <Wrapper {...rest}>
+      <Image src={src} layout="fill" objectFit={objectFit} />
+    </Wrapper>
+  );
+};

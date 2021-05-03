@@ -5,6 +5,9 @@ import { Card } from '../molecules/card';
 import MapSvg from '../../public/images/map-temp.svg';
 import { transparentize } from 'polished';
 import { PriceBlock } from '@components/molecules/price-block';
+import Image from 'next/image';
+import { Backdrop } from '@components/molecules';
+import { BackgroundImage } from '@components/molecules/background-image';
 
 interface TourCardProps extends BoxProps {
   image: any;
@@ -51,7 +54,9 @@ export const TourCard: FC<TourCardProps> = ({
   price,
   ...props
 }) => (
-  <Card variant="dark" backgroundUrl={image} {...props}>
+  <Card variant="dark" {...props}>
+    <Backdrop hoverEffect />
+    <BackgroundImage src={image} zIndex={-2} />
     <Footer>
       <FooterContent>
         <Box maxWidth="24rem" mb={2} height="6rem">

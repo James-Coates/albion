@@ -1,15 +1,15 @@
 import { useState } from 'react';
 
-export function useControllableState(
-  value,
-  changeHandler,
-  initialValue,
+export function useControllableState<T>(
+  value: T,
+  changeHandler: (newValue: T) => void,
+  initialValue: T,
 ) {
   const [stateValue, setState] = useState(initialValue);
   const effectiveValue = value !== undefined ? value : stateValue;
   return [
     effectiveValue,
-    (newValue) => {
+    (newValue: T) => {
       setState(newValue);
       if (changeHandler) {
         changeHandler(newValue);

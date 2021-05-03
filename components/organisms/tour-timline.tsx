@@ -7,7 +7,6 @@ interface TourTimelineProps {}
 
 const TimelineContainer = styled(Container)`
   max-width: 800px;
-  margin
 `;
 
 export const TourTimeline: FC<TourTimelineProps> = () => {

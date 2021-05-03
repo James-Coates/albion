@@ -1,3 +1,4 @@
+import { Tour } from '@type/tour';
 import {
   createContext,
   Dispatch,
@@ -5,8 +6,7 @@ import {
   useContext,
   useReducer,
 } from 'react';
-import { Tour } from '../models';
-import { Guest } from '../models/guest.model';
+import { Guest } from '../types/guest.model';
 import { LayoutStateWrapper } from './layout/layout-state';
 
 interface GuestDetails {

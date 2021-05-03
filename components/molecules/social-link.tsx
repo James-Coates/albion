@@ -1,6 +1,5 @@
 import { FC } from 'react';
 import PropTypes from 'prop-types';
-import Link from 'next/link';
 import { Instagram } from '@styled-icons/fa-brands/Instagram';
 import { Twitter } from '@styled-icons/fa-brands/Twitter';
 import { Tripadvisor } from '@styled-icons/fa-brands/Tripadvisor';

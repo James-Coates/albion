@@ -1,9 +1,8 @@
 import styled, { css } from 'styled-components';
-import { BackgroundImage } from '.';
 import { FC, ReactNode } from 'react';
 import { Box, BoxProps } from '@material-ui/core';
-import { Theme } from '../../theme/theme';
-import Image from 'next/image';
+import Image, { ImageProps } from 'next/image';
+import { Theme } from '@theme/theme';
 
 type CardVariant = 'light' | 'dark';
 
@@ -13,7 +12,7 @@ export interface CardProps extends BoxProps {
   variant?: CardVariant;
 }
 
-const CardWrapper = styled(Box)`
+const CardWrapper = styled(Box)<CardProps>`
   position: relative;
   z-index: 0;
   padding: 24px;
@@ -26,7 +25,7 @@ const CardWrapper = styled(Box)`
   ${({ variant, theme }) => handleVariant(variant, theme)}
 `;
 
-const CardBackground = styled(BackgroundImage)`
+const CardBackground = styled(Image)<ImageProps>`
   z-index: -1;
   transition: 600ms;
   ${CardWrapper}:hover & {
@@ -34,7 +33,7 @@ const CardBackground = styled(BackgroundImage)`
   }
 `;
 
-const CardBackdrop = styled.div`
+export const CardBackdrop = styled.div`
   position: absolute;
   top: 0;
   left: 0;
@@ -54,15 +53,12 @@ export const Card: FC<CardProps> = ({
   children,
   backgroundUrl,
   ...props
-}) => (
-  <CardWrapper {...props}>
-    {backgroundUrl ? <CardBackground src={backgroundUrl} /> : null}
-    <CardBackdrop />
-    {children}
-  </CardWrapper>
-);
+}) => <CardWrapper {...props}>{children}</CardWrapper>;
 
-function handleVariant(variant: CardVariant, theme: Theme) {
+function handleVariant(
+  variant: CardVariant | undefined,
+  theme: Theme,
+) {
   switch (variant) {
     case 'dark':
       return darkVariant(theme);

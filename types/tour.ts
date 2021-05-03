@@ -1,7 +1,8 @@
 import { BlockContentProps } from '@sanity/block-content-to-react';
+import { InclusionsData } from './inclusions';
 
 export interface Tour {
-  id: string;
+  _id: string;
   slug: string;
   title: string;
   summary: BlockContentProps;
@@ -12,5 +13,5 @@ export interface Tour {
   // slides?: Slide[];
   // mapData?: MapData;
   // itinerary?: ItineraryItem[];
-  // inclusions?: InclusionsData;
+  inclusionsData: InclusionsData;
 }

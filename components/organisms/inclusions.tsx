@@ -1,20 +1,21 @@
 import { FC } from 'react';
-import {
-  Flex,
-  FlexItem,
-  Heading,
-  Text,
-} from '../../components/atoms';
-import { Block, Container } from '../../components/molecules';
-import { InclusionsData } from '../../models';
+import { InclusionsData } from '../../types';
 import { Check2Circle, XCircle } from '@styled-icons/bootstrap/';
 import BlockContent from '@sanity/block-content-to-react';
 import { serializers } from '../../sanity-client.config';
-import { Box, Typography } from '@material-ui/core';
+import { Box, Container, Grid, Typography } from '@material-ui/core';
 
-export const InclusionItem = ({ included, text }) => (
-  <Flex mb={4}>
-    <FlexItem
+interface InclusionItem {
+  included: any;
+  text: string;
+}
+
+export const InclusionItem: FC<InclusionItem> = ({
+  included,
+  text,
+}) => (
+  <Box display="flex" mb={4}>
+    <Box
       flex="0 0 40px"
       color={included ? 'success.main' : 'error.main'}
       mr={3}
@@ -24,11 +25,11 @@ export const InclusionItem = ({ included, text }) => (
       ) : (
         <XCircle width={32} />
       )}
-    </FlexItem>
-    <FlexItem flex="1">
+    </Box>
+    <Box flex="1">
       <Typography>{text}</Typography>
-    </FlexItem>
-  </Flex>
+    </Box>
+  </Box>
 );
 
 interface InclusionsProps {
@@ -37,24 +38,26 @@ interface InclusionsProps {
 
 export const Inclusions: FC<InclusionsProps> = ({ data }) => {
   return (
-    <Block>
+    <Box>
       <Container>
         <Box maxWidth={720}>
           <Typography variant="h2" gutterBottom>
             What’s included?
           </Typography>
-          <BlockContent
-            blocks={data.intro}
-            serializers={serializers}
-          />
+          {data.intro ? (
+            <BlockContent
+              blocks={data.intro}
+              serializers={serializers}
+            />
+          ) : null}
         </Box>
-        <Flex justifyContent="space-between" flexWrap="wrap" my={5}>
-          <FlexItem flexBasis={'40%'} ml={5}>
+        <Grid container>
+          <Grid item>
             {data.inclusions.map((inclusion, i) => (
               <InclusionItem key={i} included text={inclusion} />
             ))}
-          </FlexItem>
-          <FlexItem flexBasis={'40%'}>
+          </Grid>
+          <Grid item>
             {data.exclusions.map((exclusion, i) => (
               <InclusionItem
                 key={i}
@@ -62,9 +65,9 @@ export const Inclusions: FC<InclusionsProps> = ({ data }) => {
                 text={exclusion}
               />
             ))}
-          </FlexItem>
-        </Flex>
+          </Grid>
+        </Grid>
       </Container>
-    </Block>
+    </Box>
   );
 };

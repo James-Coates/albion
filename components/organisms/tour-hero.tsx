@@ -2,23 +2,16 @@ import {
   Box,
   BoxProps,
   Container,
-  Grid,
   Typography,
 } from '@material-ui/core';
-import { up } from 'styled-breakpoints';
 import styled, { css } from 'styled-components';
-import { fill } from '../../theme/helpers';
-import { Button, Svg } from '../atoms';
-import { BackgroundImage } from '../molecules';
 import { ChevronThinDown } from '@styled-icons/entypo/ChevronThinDown';
-import Fade from 'react-reveal/Fade';
 import { linearGradient, rgba } from 'polished';
-import { serializers } from '../../sanity-client.config';
-import BlockContent, {
-  BlockContentProps,
-} from '@sanity/block-content-to-react';
-import { Theme } from 'theme/theme';
+
 import { TourHeroCard } from '@components/molecules/tour-hero-card';
+import { motion } from 'framer-motion';
+import Image from 'next/image';
+import { fill } from '@lib/styled-components/utils';
 
 interface HeroProps extends BoxProps {
   backgroundImage: string | null;
@@ -27,11 +20,7 @@ interface HeroProps extends BoxProps {
   handleScrollButtonClick?: () => any;
 }
 
-// const transitionWrapperStyles = (theme: Theme, transition: boolean) => css`
-//   height: calc(100vh + 140px);
-// `
-
-const Wrapper = styled(Box)<WrapperProps>`
+const Wrapper = styled(Box)`
   position: relative;
   height: 100vh;
   overflow: hidden;
@@ -128,6 +117,7 @@ const Transition = styled.div`
 `;
 
 export const TourHero = ({
+  id,
   backgroundImage,
   destinations,
   price,
@@ -137,16 +127,25 @@ export const TourHero = ({
   <Wrapper color="common.white">
     <Backdrop />
     {backgroundImage ? (
-      <BackgroundImage
-        zIndex={-2}
-        src={backgroundImage}
-      ></BackgroundImage>
+      <motion.div
+        layoutId={`image-${id}`}
+        transition={{ duration: 1 }}
+      >
+        <Box width="100vw" height="100vh">
+          <Image
+            src={backgroundImage}
+            layout="fill"
+            objectFit="cover"
+          />
+        </Box>
+      </motion.div>
     ) : null}
     <Content>
       <Container maxWidth="xl">
         <ContentWrap>
           <HeaderBox>{children}</HeaderBox>
           <CardBox>
+            {id}
             <TourHeroCard
               heading={destinations}
               price={price}

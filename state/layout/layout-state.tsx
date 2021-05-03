@@ -8,13 +8,17 @@ import {
 import { Action } from '..';
 
 export interface LayoutState {
+  loading: boolean;
   headerFloat: boolean;
   headerVariant: 'default' | 'filled';
+  menuOpen: boolean;
 }
 
 const initialState: LayoutState = {
+  loading: true,
   headerFloat: false,
   headerVariant: 'default',
+  menuOpen: false,
 };
 
 const LayoutContext = createContext(initialState);
@@ -22,6 +26,12 @@ const LayoutDispatch = createContext<Dispatch<Action>>(() => null);
 
 const reducer = (state: LayoutState, action: Action): LayoutState => {
   switch (action.type) {
+    case 'setLoading':
+      console.log(action);
+      return {
+        ...state,
+        loading: action.payload,
+      };
     case 'setHeaderFloat':
       return {
         ...state,
@@ -31,6 +41,11 @@ const reducer = (state: LayoutState, action: Action): LayoutState => {
       return {
         ...state,
         headerVariant: action.payload,
+      };
+    case 'toggleMenuOpen':
+      return {
+        ...state,
+        menuOpen: !state.menuOpen,
       };
     default:
       console.warn(`Action type ${action.type} not found`);

@@ -29,8 +29,11 @@
       "@type/*": ["types/*"],
       "@lib/*": ["lib/*"],
       "@public/*": ["public/*"],
+      "@theme/*": ["theme/*"],
+      "@api/*": ["api/*"],
+      "@state/*": ["state/*"],
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "backup"]
 }

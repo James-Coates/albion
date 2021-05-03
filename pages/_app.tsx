@@ -1,30 +1,19 @@
-import { ThemeProvider } from 'styled-components';
-import GlobalStyle from '../theme/global-styles';
-import theme, { muiTheme } from '../theme/theme';
-
-import 'swiper/swiper-bundle.css';
-import { MuiThemeProvider } from '@material-ui/core';
-import { MuiPickersUtilsProvider } from '@material-ui/pickers';
-import MomentUtils from '@date-io/moment';
-import { AppWrapper } from '../state';
-import { useEffect } from 'react';
+import React from 'react';
 import config from 'react-reveal/globals';
+import { AppProps } from 'next/dist/next-server/lib/router/router';
+import { AppWrapper } from '@state/index';
+import { ThemeProviders } from '@components/providers';
 
-function MyApp({ Component, pageProps }) {
+const MyApp: React.FC<AppProps> = ({ Component, pageProps }) => {
   config({ ssrFadeout: true });
 
   return (
-    <ThemeProvider theme={muiTheme}>
-      <MuiThemeProvider theme={muiTheme}>
-        <MuiPickersUtilsProvider utils={MomentUtils}>
-          <GlobalStyle />
-          <AppWrapper>
-            <Component {...pageProps} />
-          </AppWrapper>
-        </MuiPickersUtilsProvider>
-      </MuiThemeProvider>
-    </ThemeProvider>
+    <AppWrapper>
+      <ThemeProviders>
+        <Component {...pageProps} />
+      </ThemeProviders>
+    </AppWrapper>
   );
-}
+};
 
 export default MyApp;

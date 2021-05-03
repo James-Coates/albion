@@ -11,8 +11,3 @@ export const Button = withStyles({
     },
   },
 })(MuiButton);
-
-// Button.defaultProps = {
-//   variant: 'contained',
-//   color: 'secondary',
-// };

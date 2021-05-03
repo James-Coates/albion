@@ -1,26 +1,19 @@
-import { FC } from 'react';
-import {
-  TourList,
-  LandingHero,
-  TourSlider,
-} from '../components/organisms';
-import { Layout } from '../components/layout';
-
-import { getAllTours, getLandingData } from '../api';
-import { Box, Grid, Typography } from '@material-ui/core';
-import styled from 'styled-components';
-import { typography, TypographyProps } from 'styled-system';
+import React from 'react';
 import { InView } from 'react-intersection-observer';
-import { useLayoutDispatch } from '../state/layout/layout-state';
 import { Element, scroller } from 'react-scroll';
-import BlockContent, {
-  BlockContentProps,
-} from '@sanity/block-content-to-react';
-import { serializers, urlFor } from '../sanity-client.config';
+import { Layout } from '@components/layouts';
+import { LandingHero } from '@components/organisms';
 import { FeaturedTours } from '@components/organisms/featured-tours';
-
-import { Tour } from '../types/tour';
+// Api
+import { getLandingData } from '@api/landing';
+import { getAllTours } from '@api/tours';
+// Types
+import { Tour } from '@type/tour';
+import { BlockContentProps } from '@sanity/block-content-to-react';
+// to sort
+import { useLayoutDispatch } from '@state/layout/layout-state';
 import { AboutSection } from '@components/organisms/about-section';
+import video from '../public/video/albion.mp4';
 
 interface LandingProps {
   mainHeading: string;
@@ -29,37 +22,32 @@ interface LandingProps {
   featureList: any[];
 }
 
-const PageTitle = styled(Typography)<TypographyProps>`
-  ${typography}
-`;
-
-const Home: FC<LandingProps> = ({
+const Home: React.FC<LandingProps> = ({
   tours,
   mainHeading,
   mainCopy,
   featureList,
 }) => {
-  console.log(featureList);
   const dispatch = useLayoutDispatch();
 
-  const setHeaderFloat = (float: boolean) =>
+  const setHeaderFloat = (float: boolean): void =>
     dispatch({
       type: 'setHeaderFloat',
       payload: float,
     });
 
-  function handleLandingViewVisibility(inView: boolean) {
+  const handleLandingViewVisibility = (inView: boolean): void => {
     setHeaderFloat(!inView);
-  }
+  };
 
-  function handleLandingScrollClick() {
+  const handleLandingScrollClick = (): void => {
     scroller.scrollTo('start', {
       duration: 800,
       delay: 0,
       smooth: 'easeInOutQuart',
       offset: 1,
     });
-  }
+  };
 
   return (
     <Layout headerFloatVariant="filled">
@@ -68,7 +56,9 @@ const Home: FC<LandingProps> = ({
           mainHeading={mainHeading}
           mainCopy={mainCopy}
           backgroundImage="/images/poster.png"
+          video={true}
           handleScrollButtonClick={handleLandingScrollClick}
+          transition={true}
         />
         <Element name="start">
           <FeaturedTours tours={tours} />
@@ -81,7 +71,6 @@ const Home: FC<LandingProps> = ({
 
 export async function getStaticProps(): Promise<{
   props: LandingProps;
-  revalidate: number;
 }> {
   const {
     mainHeading = 'Main Heading',
@@ -90,15 +79,8 @@ export async function getStaticProps(): Promise<{
   } = (await getLandingData()) || {};
   const tours = await getAllTours();
 
-  const res = await fetch(
-    'https://test-albion.checkfront.com/api/3.0/item?packages=true',
-  );
-
-  const json = await res.json();
-
   return {
     props: { tours, mainHeading, mainCopy, featureList },
-    revalidate: 1,
   };
 }
 

@@ -1,11 +1,6 @@
-import { FC, useRef } from 'react';
+import React from 'react';
 import styled, { css } from 'styled-components';
-import SwiperCore, {
-  Navigation,
-  Pagination,
-  Scrollbar,
-  A11y,
-} from 'swiper';
+import SwiperCore, { Navigation, Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { NavigationOptions } from 'swiper/types/components/navigation';
 import { PaginationOptions } from 'swiper/types/components/pagination';
@@ -14,8 +9,7 @@ import { Tour } from '../../types/tour';
 import { TourCard } from './tour-card';
 import { ArrowLeft, ArrowRight } from '@styled-icons/bootstrap';
 import theme from '../../theme/theme';
-import { Typography } from '@material-ui/core';
-import Link from 'next/link';
+import { Link } from '@components/atoms/link';
 
 interface TourSliderProps {
   tours: Tour[];
@@ -33,12 +27,6 @@ const TestSwiper = styled(Swiper)`
 
 const Card = styled(TourCard)`
   height: 42rem;
-
-  /* ${({ theme }) => css`
-    ${theme.breakpoints.up('md')} {
-      height: 42rem;
-    }
-  `} */
 `;
 
 // install Swiper modules
@@ -75,19 +63,19 @@ const PaginationContainer = styled.div`
   }
 `;
 
-export const TourSlider: FC<TourSliderProps> = ({ tours }) => {
-  const prevRef = useRef(null);
-  const nextRef = useRef(null);
-  const paginationRef = useRef(null);
+export const TourSlider: React.FC<TourSliderProps> = ({ tours }) => {
+  const prevRef = React.useRef(null);
+  const nextRef = React.useRef(null);
+  const paginationRef = React.useRef(null);
 
   const breakpointsOptions = {
-    [theme.breakpoints.xs]: {
+    [theme.breakpoints.values.xs]: {
       slidesPerView: 1,
     },
-    [theme.breakpoints.sm]: {
+    [theme.breakpoints.values.sm]: {
       slidesPerView: 1.3,
     },
-    [theme.breakpoints.md]: {
+    [theme.breakpoints.values.md]: {
       slidesPerView: 2.3,
     },
   };
@@ -115,14 +103,15 @@ export const TourSlider: FC<TourSliderProps> = ({ tours }) => {
     >
       {tours.map((tour) => (
         <SwiperSlide key={tour._id}>
-          <Link href={`/tours/${tour.slug}`}>
-            <a>
-              <Card
-                name={tour.title}
-                image={urlFor(tour.image).url()}
-                price={tour.price}
-              />
-            </a>
+          <Link
+            href={`/tours/${tour.slug}`}
+            as={`/tours/${tour.slug}`}
+          >
+            <Card
+              name={tour.title}
+              image={urlFor(tour.mainImage).url()}
+              price={tour.price}
+            />
           </Link>
         </SwiperSlide>
       ))}

@@ -1,7 +1,14 @@
 import { Box, Grid, Typography } from '@material-ui/core';
+import { FC } from 'react';
 import styled from 'styled-components';
 import TempMap from '../../public/images/temp-map.svg';
 import { PriceBlock } from './price-block';
+
+interface TourHeroCardProps {
+  heading: string;
+  price: number;
+  mapImage?: any;
+}
 
 const Wrapper = styled.div`
   border: 1px solid rgba(255, 255, 255, 0.5);
@@ -24,7 +31,11 @@ const MapWrapper = styled.div`
   }
 `;
 
-export const TourHeroCard = ({ heading, price, mapImage }) => {
+export const TourHeroCard: FC<TourHeroCardProps> = ({
+  heading,
+  price,
+  mapImage,
+}) => {
   return (
     <Wrapper>
       <Header>

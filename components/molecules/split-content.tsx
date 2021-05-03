@@ -1,4 +1,4 @@
-import { Box, Grid, Typography } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 import Image, { ImageProps } from 'next/image';
 import { FC } from 'react';
 import styled, { css } from 'styled-components';
@@ -70,11 +70,13 @@ export const SplitContent: FC<SplitContentProps> = ({
     <ContentGrid container alignItems="center" $reverse={reverse}>
       <Grid item xs={12} md={7}>
         <ImageWrapper>
-          <AbsoluteImage
-            src={image}
-            layout="fill"
-            objectFit="cover"
-          />
+          {image ? (
+            <AbsoluteImage
+              src={image}
+              layout="fill"
+              objectFit="cover"
+            />
+          ) : null}
         </ImageWrapper>
       </Grid>
       <Grid item xs={12} md={5}>

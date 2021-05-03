@@ -1,19 +1,18 @@
-import { Box, BoxProps, Typography } from '@material-ui/core';
-import { up } from 'styled-breakpoints';
+import React from 'react';
 import styled, { css } from 'styled-components';
-import { fill } from '../../theme/helpers';
-import { Svg } from '../atoms';
-import { BackgroundImage } from '../molecules';
-import { ChevronThinDown } from '@styled-icons/entypo/ChevronThinDown';
-import Fade from 'react-reveal/Fade';
+import { motion } from 'framer-motion';
 import { linearGradient, rgba } from 'polished';
+import { ChevronThinDown } from '@styled-icons/entypo/ChevronThinDown';
 import { serializers } from '../../sanity-client.config';
 import BlockContent, {
   BlockContentProps,
 } from '@sanity/block-content-to-react';
-import { Theme } from 'theme/theme';
+import { fill } from '@lib/styled-components/utils';
+import Image, { ImageProps } from 'next/image';
+import { VideoCover } from '@components/molecules/video-cover';
+import { Box, BoxProps, Typography } from '@material-ui/core';
 
-interface HeroProps extends BoxProps {
+interface LandingHeroProps {
   backgroundImage: string | null;
   handleScrollButtonClick?: () => any;
   mainHeading: string;
@@ -23,12 +22,8 @@ interface HeroProps extends BoxProps {
 }
 
 interface WrapperProps extends BoxProps {
-  $transition: boolean;
+  $transition: boolean | undefined;
 }
-
-// const transitionWrapperStyles = (theme: Theme, transition: boolean) => css`
-//   height: calc(100vh + 140px);
-// `
 
 const Wrapper = styled(Box)<WrapperProps>`
   position: relative;
@@ -55,28 +50,13 @@ const Wrapper = styled(Box)<WrapperProps>`
 const Backdrop = styled.div`
   ${fill()}
   z-index: -1;
-  background: rgb(0, 0, 0);
-  background: linear-gradient(
+  background: rgba(0, 0, 0, 0.4);
+  /* background: linear-gradient(
     0deg,
     rgba(0, 0, 0, 0.15) 0%,
     rgba(0, 0, 0, 0.15) 20%,
     rgba(0, 0, 0, 0.15) 100%
-  );
-`;
-
-const VideoBg = styled.video`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: auto;
-  height: auto;
-  min-width: 100%;
-  min-height: 100%;
-  -webkit-transform: translate(-50%, -50%);
-  -moz-transform: translate(-50%, -50%);
-  -ms-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
-  z-index: -2;
+  ); */
 `;
 
 const Content = styled(Box)`
@@ -130,29 +110,45 @@ const Transition = styled.div`
     })}
 `;
 
-export const LandingHero = ({
+const BackgroundImage = styled(Image)<ImageProps>`
+  z-index: -1;
+`;
+
+const BackgroundVideo = styled(VideoCover)`
+  z-index: -2;
+`;
+
+export const LandingHero: React.FC<LandingHeroProps> = ({
   mainHeading,
   mainCopy,
   backgroundImage,
   video,
   transition,
   handleScrollButtonClick,
-}: HeroProps) => (
+}) => (
   <Wrapper color="common.white" $transition={transition}>
     <Backdrop />
-    {backgroundImage ? (
+    {/* {backgroundImage ? (
       <BackgroundImage
-        zIndex={-2}
         src={backgroundImage}
-      ></BackgroundImage>
-    ) : null}
+        layout="fill"
+        objectFit="cover"
+      />
+    ) : null} */}
     {video ? (
-      <VideoBg muted loop autoPlay>
+      <BackgroundVideo muted loop autoPlay>
         <source src="/video/albion.mp4"></source>
-      </VideoBg>
+      </BackgroundVideo>
     ) : null}
     <Content>
-      <Fade bottom delay={600} duration={1000}>
+      <motion.div
+        initial={{ opacity: 0, y: '5rem' }}
+        animate={{
+          opacity: 1,
+          y: 0,
+          transition: { duration: 1, delay: 0.5 },
+        }}
+      >
         <Box>
           <Typography variant="h1" gutterBottom>
             {mainHeading}
@@ -165,15 +161,23 @@ export const LandingHero = ({
             ></BlockContent>
           ) : null}
         </Box>
-      </Fade>
+      </motion.div>
     </Content>
     {transition ? <Transition /> : null}
 
     <ScrollButton onClick={handleScrollButtonClick}>
-      <Box position="relative">
-        <Typography variant="body2">Find out more</Typography>
-        <ChevronThinDown height={24} />
-      </Box>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{
+          opacity: 1,
+          transition: { duration: 0.5, delay: 2 },
+        }}
+      >
+        <Box position="relative">
+          <Typography variant="body2">Find out more</Typography>
+          <ChevronThinDown height={24} />
+        </Box>
+      </motion.div>
     </ScrollButton>
   </Wrapper>
 );
