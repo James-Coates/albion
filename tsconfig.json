@@ -35,5 +35,5 @@
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
-  "exclude": ["node_modules", "backup"]
+  "exclude": ["node_modules", "backup", "serverless"]
 }
