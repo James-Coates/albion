@@ -1,25 +1,41 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { InView } from 'react-intersection-observer';
 import { Element, scroller } from 'react-scroll';
+import Link from 'next/link';
+
 import { Layout } from '@components/layouts';
-import { LandingHero } from '@components/organisms';
-import { FeaturedTours } from '@components/organisms/featured-tours';
-// Api
+
 import { getLandingData } from '@api/landing';
 import { getAllTours } from '@api/tours';
-// Types
+
 import { Tour } from '@type/tour';
 import { BlockContentProps } from '@sanity/block-content-to-react';
-// to sort
+
 import { useLayoutDispatch } from '@state/layout/layout-state';
-import { AboutSection } from '@components/organisms/about-section';
-import video from '../public/video/albion.mp4';
+import { Box, Container, Grid, Typography } from '@material-ui/core';
+import { LandingHero } from '@components/organisms/landing-hero';
+import { TextButton } from '@components/atoms/text-button';
+import { TourList } from '@components/organisms';
+import {
+  BlockContent,
+  Section,
+  SectionIntroCopy,
+  SectionIntroHeading,
+  SplitContent,
+  SplitContentCopy,
+  SplitContentImage,
+} from '@components/molecules';
+import { FadeOnScroll } from '@components/animations';
+import { Feature } from '@type/feature';
+import { urlFor } from 'sanity-client.config';
+import Image from 'next/image';
+import { isOdd } from '@lib/math';
 
 interface LandingProps {
   mainHeading: string;
   mainCopy?: BlockContentProps;
   tours: Tour[];
-  featureList: any[];
+  featureList: Feature[];
 }
 
 const Home: React.FC<LandingProps> = ({
@@ -37,34 +53,119 @@ const Home: React.FC<LandingProps> = ({
     });
 
   const handleLandingViewVisibility = (inView: boolean): void => {
+    console.log('change');
     setHeaderFloat(!inView);
   };
 
   const handleLandingScrollClick = (): void => {
     scroller.scrollTo('start', {
-      duration: 800,
+      duration: 2000,
       delay: 0,
       smooth: 'easeInOutQuart',
       offset: 1,
     });
   };
 
+  useEffect(() => {
+    setHeaderFloat(false);
+  }, []);
+
   return (
-    <Layout headerFloatVariant="filled">
+    <Layout>
       <InView as="div" onChange={handleLandingViewVisibility}>
         <LandingHero
           mainHeading={mainHeading}
           mainCopy={mainCopy}
-          backgroundImage="/images/poster.png"
-          video={true}
           handleScrollButtonClick={handleLandingScrollClick}
-          transition={true}
         />
-        <Element name="start">
-          <FeaturedTours tours={tours} />
-        </Element>
       </InView>
-      <AboutSection features={featureList} />
+      <Element name="start">
+        <Section>
+          <Container maxWidth="xl">
+            <FadeOnScroll>
+              <SectionIntroHeading>
+                <Typography variant="h2" color="primary">
+                  Explore our Featured Tours
+                </Typography>
+              </SectionIntroHeading>
+              <SectionIntroCopy>
+                <Typography variant="body1">
+                  Lorem ipsum dolor sit amet consectetur adipisicing
+                  elit. Laborum, soluta veritatis totam officiis qui
+                  recusandae aliquam nobis. Doloribus placeat veniam
+                  laudantium, laborum consequatur quis dolorum, nulla
+                  magni in ducimus ipsa accusamus perspiciatis nostrum
+                  quam iure tenetur nobis tempora, blanditiis rerum?
+                </Typography>
+
+                <Box mt={4}>
+                  <Link href="/">
+                    <a>
+                      <TextButton>View all tours</TextButton>
+                    </a>
+                  </Link>
+                </Box>
+              </SectionIntroCopy>
+            </FadeOnScroll>
+            <Box my={7}>
+              <TourList tours={tours} />
+            </Box>
+          </Container>
+        </Section>
+        <Section>
+          <Container maxWidth="xl">
+            <FadeOnScroll>
+              <SectionIntroHeading>
+                <Typography variant="h2" color="primary">
+                  Explore our Featured Tours
+                </Typography>
+              </SectionIntroHeading>
+              <SectionIntroCopy>
+                <Typography variant="body1">
+                  Lorem ipsum dolor sit amet consectetur adipisicing
+                  elit. Laborum, soluta veritatis totam officiis qui
+                  recusandae aliquam nobis. Doloribus placeat veniam
+                  laudantium, laborum consequatur quis dolorum, nulla
+                  magni in ducimus ipsa accusamus perspiciatis nostrum
+                  quam iure tenetur nobis tempora, blanditiis rerum?
+                </Typography>
+              </SectionIntroCopy>
+            </FadeOnScroll>
+          </Container>
+          {featureList.map((feature, i) => (
+            <Box my="12vh" key={i}>
+              <FadeOnScroll>
+                <SplitContent reverse={isOdd(i)}>
+                  <SplitContentImage>
+                    <Image
+                      src={urlFor(feature.image).url() || ''}
+                      layout="fill"
+                      objectFit="cover"
+                    />
+                  </SplitContentImage>
+                  <SplitContentCopy>
+                    <Typography
+                      variant="overline"
+                      gutterBottom
+                      color="textSecondary"
+                    >
+                      {feature.context}
+                    </Typography>
+                    <Typography
+                      variant="h3"
+                      gutterBottom
+                      color="primary"
+                    >
+                      {feature.heading}
+                    </Typography>
+                    <BlockContent blocks={feature.summary} />
+                  </SplitContentCopy>
+                </SplitContent>
+              </FadeOnScroll>
+            </Box>
+          ))}
+        </Section>
+      </Element>
     </Layout>
   );
 };

@@ -8,7 +8,7 @@ let theme = createMuiTheme({
   palette: {
     primary: {
       light: '#546ccc',
-      main: '#313C6C',
+      main: '#383D6C',
       dark: '#141829',
     },
     secondary: {
@@ -22,21 +22,21 @@ let theme = createMuiTheme({
   typography: {
     htmlFontSize: 10,
     fontSize: 14,
-    fontFamily: 'Montserrat, Arial, sans-serif',
+    fontFamily: 'Oswald, Arial, sans-serif',
     h1: {
       fontFamily: 'Belwe Bold',
-      fontSize: 80,
+      fontSize: 120,
       lineHeight: 1,
     },
     h2: {
       fontFamily: 'Belwe Bold',
-      fontSize: 72,
-      lineHeight: 1,
+      fontSize: 90,
+      lineHeight: 1.1,
     },
     h3: {
       fontFamily: 'Belwe Bold',
-      fontSize: 48,
-      lineHeight: 1,
+      fontSize: 56,
+      lineHeight: 1.1,
     },
     h4: {
       fontFamily: 'Belwe Bold',
@@ -52,16 +52,30 @@ let theme = createMuiTheme({
       lineHeight: 1.5,
     },
     body1: {
-      fontSize: 16,
+      fontSize: 18,
       lineHeight: 1.8,
+      letterSpacing: '0.03em',
     },
     body2: {
       fontSize: 13,
     },
     button: {
-      fontSize: 12,
-      fontWeight: 700,
-      height: 40,
+      fontSize: 14,
+      letterSpacing: '0.1em',
+      fontWeight: 400,
+    },
+    overline: {
+      fontSize: 14,
+      letterSpacing: '0.1em',
+    },
+  },
+  overrides: {
+    MuiButton: {
+      root: {
+        borderRadius: 0,
+        height: 40,
+        padding: '0 2em',
+      },
     },
   },
   props: {
@@ -71,6 +85,7 @@ let theme = createMuiTheme({
     MuiButton: {
       variant: 'contained',
       color: 'secondary',
+      disableElevation: true,
     },
   },
 });

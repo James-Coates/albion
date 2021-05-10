@@ -1,10 +1,10 @@
-import { Link } from '@components/atoms';
-import { Logo } from '@components/molecules';
-import { fill } from '@lib/styled-components/utils';
-import { Box, Container, Grid, Typography } from '@material-ui/core';
 import React from 'react';
 import styled from 'styled-components';
-import { SocialLinks } from './social-links';
+
+import { Box, Container, Grid, Typography } from '@material-ui/core';
+
+import { fill } from '@lib/styled-components/utils';
+import Link from 'next/link';
 
 const FooterWrapper = styled(Box)`
   position: relative;
@@ -27,7 +27,7 @@ export const Footer: React.FC = () => (
       <Box mb={5}>
         <Grid container>
           <Grid item xs={12} md={6}>
-            <Logo />
+            {/* <Logo /> */}
           </Grid>
           <Grid container item xs={12} md={6}>
             <Grid item xs={5}>
@@ -36,12 +36,14 @@ export const Footer: React.FC = () => (
               </Typography>
               <Grid container direction="column" spacing={1}>
                 <Grid item>
-                  <Link href="">
-                    <Typography variant="body2">Tours</Typography>
+                  <Link href="/">
+                    <a>
+                      <Typography variant="body2">Tours</Typography>
+                    </a>
                   </Link>
                 </Grid>
                 <Grid item>
-                  <Link href="">
+                  <Link href="/">
                     <Typography variant="body2">Contact</Typography>
                   </Link>
                 </Grid>
@@ -51,7 +53,7 @@ export const Footer: React.FC = () => (
               <Typography component="h3" variant="h4" gutterBottom>
                 Follow us
               </Typography>
-              <SocialLinks></SocialLinks>
+              {/* <SocialLinks></SocialLinks> */}
             </Grid>
           </Grid>
         </Grid>

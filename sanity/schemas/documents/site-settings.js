@@ -2,15 +2,34 @@ export default {
   name: 'siteSettings',
   type: 'document',
   title: 'Site Settings',
-  __experimental_actions: [
-    'update',
-    /* 'create', 'delete', */ 'publish',
-  ],
+  __experimental_actions: ['update', 'create', 'delete', 'publish'],
   fields: [
     {
       name: 'title',
       type: 'string',
       title: 'Title',
+    },
+    {
+      name: 'social',
+      type: 'object',
+      title: 'Social Media Handles',
+      fields: [
+        {
+          title: 'Twitter',
+          name: 'twitter',
+          type: 'string',
+        },
+        {
+          title: 'Instagram',
+          name: 'instagram',
+          type: 'string',
+        },
+        {
+          title: 'Facebook',
+          name: 'facebook',
+          type: 'string',
+        },
+      ],
     },
     // {
     //   type: 'color',

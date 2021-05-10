@@ -1,6 +1,10 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
-export const VideoCover = styled.video`
+interface VideoCoverProps {
+  zIndex?: number;
+}
+
+export const VideoCover = styled.video<VideoCoverProps>`
   position: absolute;
   top: 50%;
   left: 50%;
@@ -12,5 +16,10 @@ export const VideoCover = styled.video`
   -moz-transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
-  z-index: -2;
+  ${({ zIndex }) =>
+    zIndex
+      ? css`
+          z-index: ${zIndex};
+        `
+      : null}
 `;

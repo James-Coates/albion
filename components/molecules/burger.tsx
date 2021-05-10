@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import { InferPropTypes } from '../../lib/react/infer-proptypes';
@@ -14,7 +14,10 @@ interface BurgerProps extends InferPropTypes<typeof burgerPropTypes> {
   onClick?: () => any;
 }
 
-const BurgerComponent: FC<BurgerProps> = ({ isActive, ...props }) => (
+const BurgerComponent: React.FC<BurgerProps> = ({
+  isActive,
+  ...props
+}) => (
   <button {...props}>
     <Inner>
       <Top />

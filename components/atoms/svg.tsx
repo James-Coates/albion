@@ -1,7 +1,12 @@
+import React from 'react';
 import styled from 'styled-components';
-import { Box } from '@material-ui/core';
+import { Box, BoxProps } from '@material-ui/core';
 
-export const Svg = styled(Box)`
+interface SvgProps extends BoxProps {
+  Icon: typeof React.Component;
+}
+
+export const Wrapper = styled(Box)`
   display: inline-block;
   svg {
     height: ${(props) => (props.height ? '100%' : 'auto')};
@@ -11,3 +16,11 @@ export const Svg = styled(Box)`
     color: inherit;
   }
 `;
+
+export const SvgIcon: React.FC<SvgProps> = ({ Icon, ...rest }) => {
+  return (
+    <Wrapper {...rest}>
+      <Icon />
+    </Wrapper>
+  );
+};

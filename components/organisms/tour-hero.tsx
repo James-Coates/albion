@@ -1,22 +1,19 @@
-import {
-  Box,
-  BoxProps,
-  Container,
-  Typography,
-} from '@material-ui/core';
+import React from 'react';
 import styled, { css } from 'styled-components';
-import { ChevronThinDown } from '@styled-icons/entypo/ChevronThinDown';
-import { linearGradient, rgba } from 'polished';
+// Internal
+import {
+  Backdrop,
+  BackgroundImage,
+  ScrollButton,
+} from '@components/atoms';
+import { BlockContent } from '@components/molecules';
+// External
+import { Box, Typography } from '@material-ui/core';
+import { Tour } from '@type/tour';
+import { urlFor } from 'sanity-client.config';
 
-import { TourHeroCard } from '@components/molecules/tour-hero-card';
-import { motion } from 'framer-motion';
-import Image from 'next/image';
-import { fill } from '@lib/styled-components/utils';
-
-interface HeroProps extends BoxProps {
-  backgroundImage: string | null;
-  destinations: string;
-  price: number;
+interface TourHeroProps {
+  tour: Tour;
   handleScrollButtonClick?: () => any;
 }
 
@@ -26,140 +23,67 @@ const Wrapper = styled(Box)`
   overflow: hidden;
 `;
 
-const Backdrop = styled.div`
-  ${fill()}
-  z-index: -1;
-  background-color: rgba(0, 0, 0, 0.4);
-`;
-
-const VideoBg = styled.video`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: auto;
-  height: auto;
-  min-width: 100%;
-  min-height: 100%;
-  -webkit-transform: translate(-50%, -50%);
-  -moz-transform: translate(-50%, -50%);
-  -ms-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
-  z-index: -2;
+const InnerWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  height: 100%;
 `;
 
 const Content = styled(Box)`
-  position: absolute;
-  /* max-width: 720px; */
-  top: 50%;
-  left: 16px;
-  right: 16px;
-  transform: translateY(-50%);
-  text-shadow: 0px 0px 32px rgba(0, 0, 0, 0.4);
-  justify-content: space-around;
+  max-width: 900px;
+  padding: ${({ theme }) => theme.spacing(2)};
 
   ${({ theme }) => css`
     ${theme.breakpoints.up('md')} {
-      transform: none;
-      top: 25%;
-      left: 0;
-      right: 0;
+      margin-left: 10%;
+      padding-top: 15%;
     }
-  `}
+  `};
 `;
 
-const ContentWrap = styled.div`
-  display: flex;
-  justify-content: space-between;
-  max-width: 1600px;
-  margin: 0 auto;
-`;
-
-const HeaderBox = styled.div`
-  flex: 1 0 40%;
-  max-width: 600px;
-`;
-
-const CardBox = styled.div`
-  flex: 1 0 40%;
-  max-width: 520px;
-  margin-top: 24em;
-`;
-
-const ScrollButton = styled.button`
+const ScrollButtonContainer = styled.div`
   position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  width: 100%;
-  background-color: transparent;
-  outline: none;
-  border: none;
-  cursor: pointer;
+  bottom: 32px;
+  right: 32px;
   padding: 16px;
   color: white;
 `;
 
-const Transition = styled.div`
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 50vh;
-  z-index: -1;
-  ${({ theme }) =>
-    linearGradient({
-      colorStops: [
-        `${rgba(theme.palette.primary.dark, 0)} 0%`,
-        `${rgba(theme.palette.primary.dark, 1)} 100%`,
-      ],
-      toDirection: 'to bottom',
-    })}
-`;
-
-export const TourHero = ({
-  id,
-  backgroundImage,
-  destinations,
-  price,
-  children,
+export const TourHero: React.FC<TourHeroProps> = ({
+  tour,
   handleScrollButtonClick,
-}: HeroProps) => (
+}) => (
   <Wrapper color="common.white">
-    <Backdrop />
-    {backgroundImage ? (
-      <motion.div
-        layoutId={`image-${id}`}
-        transition={{ duration: 1 }}
-      >
-        <Box width="100vw" height="100vh">
-          <Image
-            src={backgroundImage}
-            layout="fill"
-            objectFit="cover"
-          />
-        </Box>
-      </motion.div>
-    ) : null}
-    <Content>
-      <Container maxWidth="xl">
-        <ContentWrap>
-          <HeaderBox>{children}</HeaderBox>
-          <CardBox>
-            {id}
-            <TourHeroCard
-              heading={destinations}
-              price={price}
-            ></TourHeroCard>
-          </CardBox>
-        </ContentWrap>
-      </Container>
-    </Content>
+    <Backdrop zIndex={-1} opacity={0.5} />
+    <BackgroundImage
+      src={urlFor(tour.mainImage).url() || ''}
+      objectFit="cover"
+      zIndex="-2"
+    />
+    <InnerWrapper>
+      <Content>
+        <Typography variant="overline" gutterBottom>
+          {tour.destinations}
+        </Typography>
+        <Typography variant="h2" gutterBottom component="h1">
+          {tour.title}
+        </Typography>
 
-    <ScrollButton onClick={handleScrollButtonClick}>
-      <Box position="relative">
-        <Typography variant="body2">Find out more</Typography>
-        <ChevronThinDown height={24} />
-      </Box>
-    </ScrollButton>
+        {tour.summary ? (
+          <BlockContent blocks={tour.summary}></BlockContent>
+        ) : null}
+
+        {/* <PlayButton></PlayButton>
+        <Box mt={2}>
+          <Typography variant="overline">
+            Preview the experience
+          </Typography>
+        </Box> */}
+      </Content>
+
+      <ScrollButtonContainer onClick={handleScrollButtonClick}>
+        <ScrollButton>Find out more</ScrollButton>
+      </ScrollButtonContainer>
+    </InnerWrapper>
   </Wrapper>
 );

@@ -1,5 +1,10 @@
 import React from 'react';
-import NextDocument from 'next/document';
+import NextDocument, {
+  Head,
+  Html,
+  Main,
+  NextScript,
+} from 'next/document';
 import { ServerStyleSheet as StyledComponentSheets } from 'styled-components';
 import { ServerStyleSheets as MaterialUiServerStyleSheets } from '@material-ui/core/styles';
 
@@ -33,5 +38,18 @@ export default class Document extends NextDocument {
     } finally {
       styledComponentSheet.seal();
     }
+  }
+
+  render() {
+    return (
+      <Html>
+        <Head />
+        <body>
+          <Main />
+          <div id="mobile-menu-root"></div>
+          <NextScript />
+        </body>
+      </Html>
+    );
   }
 }

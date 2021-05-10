@@ -1,18 +1,19 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
-import { SocialLinks } from '@components/organisms';
-import { Box, Grid, Typography } from '@material-ui/core';
-import { Button } from '@components/atoms';
 import { motion } from 'framer-motion';
+
+import { Box, Button, Grid, Typography } from '@material-ui/core';
+
+import { NavItem, SocialLink } from '@components/molecules';
+
 import { NavProps } from '.';
-import { NavItem } from '@components/molecules/nav-item';
 
 const Break = styled.span`
-  height: 40px;
+  height: 24px;
   width: 1px;
   background-color: white;
-  opacity: 0.2;
-  margin: ${({ theme }) => `0 ${theme.spacing(5)}`};
+  opacity: 0.1;
+  margin: ${({ theme }) => `0 ${theme.spacing(6)}`};
 `;
 
 const Wrapper = styled(motion.div)`
@@ -20,27 +21,50 @@ const Wrapper = styled(motion.div)`
   align-items: center;
 `;
 
+const links = [
+  {
+    name: 'instagram',
+    link: 'http://google.com',
+  },
+  {
+    name: 'twitter',
+    link: 'http://google.com',
+  },
+  {
+    name: 'tripadvisor',
+    link: 'http://google.com',
+  },
+];
+
 export const PrimaryNavLg: React.FC<NavProps> = ({ menuLinks }) => {
   return (
     <Wrapper>
       <Box>
-        <Grid container spacing={4}>
+        <Grid container spacing={8}>
           {menuLinks.map((link, i) => (
             <Grid item key={i}>
               <NavItem route={link.route}>
-                <Typography variant="body2">{link.label}</Typography>
+                <Typography variant="button" component="span">
+                  {link.label}
+                </Typography>
               </NavItem>
             </Grid>
           ))}
         </Grid>
       </Box>
       <Break />
-      <Box mr={5}>
-        <SocialLinks />
-      </Box>
       <Box>
-        <Button>Book a tour</Button>
+        <Grid container spacing={3}>
+          {links.map((item, i) => (
+            <Grid item key={i}>
+              <SocialLink name={item.name} link={item.link} />
+            </Grid>
+          ))}
+        </Grid>
       </Box>
+      {/* <Box>
+        <Button>Book a tour</Button>
+      </Box> */}
     </Wrapper>
   );
 };

@@ -1,11 +1,16 @@
 import React from 'react';
 import styled from 'styled-components';
 import { motion, Variants } from 'framer-motion';
-import { SocialLinks } from '@components/organisms';
-import { Burger, NavItem } from '@components/molecules';
-import { Button } from '@components/atoms';
-import { Box, Grid, Typography } from '@material-ui/core';
+// Internal
+import {
+  Burger,
+  NavItem,
+  Portal,
+  SocialLink,
+} from '@components/molecules';
 import { NavProps } from '.';
+// Extenral
+import { Box, Button, Grid, Typography } from '@material-ui/core';
 
 const Wrapper = styled(motion.div)`
   position: fixed;
@@ -16,9 +21,10 @@ const Wrapper = styled(motion.div)`
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;
+  color: ${({ theme }) => theme.palette.common.white};
   background-color: ${({ theme }) => theme.palette.primary.dark};
   flex-direction: column;
-  padding: 80px;
+  padding: 32px 64px;
 `;
 
 const HeaderBurger = styled(Burger)`
@@ -28,50 +34,53 @@ const HeaderBurger = styled(Burger)`
   right: 16px;
 `;
 
-export const PrimaryNavSm: React.FC<NavProps> = ({ menuLinks }) => {
+const variants: Variants = {
+  open: {
+    y: 0,
+    transition: {
+      duration: 0.3,
+      delayChildren: 0.4,
+      staggerChildren: 0.1,
+    },
+  },
+  closed: {
+    y: '-100%',
+    transition: { duration: 0.3, delay: 0.5, damping: 0 },
+  },
+};
+
+const menuItemVariants = {
+  open: { opacity: 1, y: 0 },
+  closed: { opacity: 0, y: '2rem' },
+};
+
+const footerVariants: Variants = {
+  open: {
+    opacity: 1,
+    y: 0,
+    transition: { delay: 0.6, damping: 0 },
+  },
+  closed: { y: '2rem', opacity: 0, transition: { damping: 0 } },
+};
+
+export const PrimaryNavSm: React.FC<NavProps> = ({
+  menuLinks,
+  socialLinks,
+}) => {
   const [menuOpen, setMenuOpen] = React.useState<boolean>(false);
-
-  const variants: Variants = {
-    open: {
-      y: 0,
-      transition: {
-        duration: 0.3,
-        delayChildren: 0.4,
-        staggerChildren: 0.1,
-      },
-    },
-    closed: {
-      y: '-100%',
-      transition: { duration: 0.3, delay: 0.5, damping: 0 },
-    },
-  };
-
-  const menuItemVariants = {
-    open: { opacity: 1, y: 0 },
-    closed: { opacity: 0, y: '2rem' },
-  };
-
-  const footerVariants: Variants = {
-    open: {
-      opacity: 1,
-      y: 0,
-      transition: { delay: 0.6, damping: 0 },
-    },
-    closed: { y: '2rem', opacity: 0, transition: { damping: 0 } },
-  };
 
   function onBurgerClick() {
     setMenuOpen(!menuOpen);
   }
 
   return (
-    <>
+    <Portal selector="mobile-menu-root">
       <Wrapper
         initial="closed"
         animate={menuOpen ? 'open' : 'closed'}
         variants={variants}
       >
-        <Box flex={1} py={10}>
+        <Box flex={1} pt={10}>
           <Grid container direction="column" spacing={5}>
             {menuLinks.map((link, i) => (
               <Grid item key={i}>
@@ -91,12 +100,17 @@ export const PrimaryNavSm: React.FC<NavProps> = ({ menuLinks }) => {
         </Box>
         <motion.div variants={footerVariants}>
           <Box my={4}>
-            <SocialLinks />
+            <Grid container spacing={2}>
+              {socialLinks.map((item, i) => (
+                <Grid item key={i}>
+                  <SocialLink name={item.name} link={item.link} />
+                </Grid>
+              ))}
+            </Grid>
           </Box>
-          <Button>Book a tour</Button>
         </motion.div>
       </Wrapper>
       <HeaderBurger isActive={menuOpen} onClick={onBurgerClick} />
-    </>
+    </Portal>
   );
 };

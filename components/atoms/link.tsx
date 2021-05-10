@@ -11,7 +11,7 @@ export const Link: FC<NextLinkProps> = ({ children, ...rest }) => {
     });
   };
   return (
-    <NextLink {...rest}>
+    <NextLink {...rest} passHref>
       <a onClick={onLinkClick}>{children}</a>
     </NextLink>
   );

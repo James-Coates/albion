@@ -36,6 +36,11 @@ const GlobalStyle = createGlobalStyle<GlobalStyleProps>`
     color: inherit;
   }
 
+  #mobile-menu-root {
+    z-index: 100;
+    position: relative;
+  }
+
 `;
 
 export default GlobalStyle;

@@ -17,6 +17,7 @@
     "@sanity/image-url": "^0.140.22",
     "@sanity/types": "^2.8.0",
     "@types/braintree-web": "^3.75.0",
+    "@types/react-dom": "^17.0.3",
     "@types/react-scroll": "^1.8.2",
     "@types/styled-components": "^5.1.9",
     "@types/styled-system": "^5.1.11",
