@@ -10,7 +10,7 @@ import { Tour } from '@type/tour';
 import { useLayoutDispatch } from '@state/layout/layout-state';
 import { Box, Container, Typography } from '@material-ui/core';
 
-import { TourList } from '@components/organisms';
+import { ToursList } from '@components/organisms';
 import {
   Section,
   SectionIntroCopy,
@@ -75,7 +75,7 @@ const Tours: React.FC<ToursProps> = ({ tours }) => {
               </SectionIntroCopy>
             </FadeOnScroll>
             <Box my="12vh">
-              <TourList tours={tours} />
+              <ToursList tours={tours} />
             </Box>
           </Container>
         </Section>

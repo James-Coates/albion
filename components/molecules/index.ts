@@ -13,3 +13,5 @@ export * from './split-content';
 export * from './split-content-image';
 export * from './split-content-copy';
 export * from './section';
+export * from './timeline';
+export * from './timeline-item';

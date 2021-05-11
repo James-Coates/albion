@@ -15,7 +15,7 @@ import { useLayoutDispatch } from '@state/layout/layout-state';
 import { Box, Container, Grid, Typography } from '@material-ui/core';
 import { LandingHero } from '@components/organisms/landing-hero';
 import { TextButton } from '@components/atoms/text-button';
-import { TourList } from '@components/organisms';
+import { ToursList } from '@components/organisms';
 import {
   BlockContent,
   Section,
@@ -108,7 +108,7 @@ const Home: React.FC<LandingProps> = ({
               </SectionIntroCopy>
             </FadeOnScroll>
             <Box my={7}>
-              <TourList tours={tours} />
+              <ToursList tours={tours} />
             </Box>
           </Container>
         </Section>

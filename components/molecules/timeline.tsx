@@ -47,33 +47,28 @@ const fakeData = [
   },
 ];
 
-interface TimelineProps {}
+interface TimelineProps {
+  type?: 'full' | 'alternating';
+}
 
-const Wrapper = styled.div`
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  min-height: 500px;
-
-  ${({ theme }) => css`
-    ${theme.breakpoints.down('sm')} {
-      padding-left: 40px;
-    }
-  `}
+const Line = styled.div`
+  position: absolute;
+  height: 100%;
+  width: 4px;
+  background-color: #e7e7e7;
+  left: 0px;
 `;
 
-interface LayoutItemProps {
-  $reverse?: boolean;
-}
 const LayoutItem = styled.div<LayoutItemProps>`
   padding: 10vh 0;
   /* opacity: 0.3; */
   display: flex;
+  align-items: center;
   position: relative;
+  min-height: 70vh;
 
   ${({ $reverse, theme }) => css`
     ${theme.breakpoints.up('md')} {
-      width: calc(50% - 40px);
       ${$reverse
         ? css`
             align-self: flex-end;
@@ -88,19 +83,45 @@ const LayoutItem = styled.div<LayoutItemProps>`
   `}
 `;
 
-const Line = styled.div`
-  position: absolute;
-  height: 100%;
-  width: 4px;
-  background-color: #e7e7e7;
-  left: 0px;
+const Wrapper = styled.div<TimelineProps>`
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 500px;
+  padding-left: 40px;
 
   ${({ theme }) => css`
-    ${theme.breakpoints.up('md')} {
-      left: 50%;
+    ${theme.breakpoints.down('sm')} {
+      padding-left: 40px;
     }
   `}
+
+  ${({ type, theme }) =>
+    type === 'alternating'
+      ? css`
+          ${Line} {
+            ${theme.breakpoints.up('md')} {
+              left: 50%;
+            }
+          }
+        `
+      : null}
+
+  ${({ type, theme }) =>
+    type === 'alternating'
+      ? css`
+          ${LayoutItem} {
+            ${theme.breakpoints.up('md')} {
+              width: calc(50% - 40px);
+            }
+          }
+        `
+      : null}
 `;
+
+interface LayoutItemProps {
+  $reverse?: boolean;
+}
 
 const Indicator = styled.div`
   position: absolute;
@@ -122,18 +143,21 @@ const IndicatorLabel = styled.div`
   padding: 4px;
 `;
 
-export const Timeline: FC<TimelineProps> = () => {
+export const Timeline: FC<TimelineProps> = ({ type }) => {
   return (
-    <Wrapper>
+    <Wrapper type={type}>
       <Line />
       {fakeData.map((item, i) => (
-        <LayoutItem key={i} $reverse={isOdd(i)}>
+        <LayoutItem
+          key={i}
+          $reverse={type === 'alternating' ? isOdd(i) : true}
+        >
           <Indicator>
             <IndicatorLabel>
               <Typography variant="body2">{item.label}</Typography>
             </IndicatorLabel>
           </Indicator>
-          <TimelineItem>
+          <TimelineItem index={i}>
             {item.image ? (
               <Box pt="55%" position="relative" mb={4}>
                 <Image

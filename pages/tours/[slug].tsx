@@ -1,13 +1,17 @@
 import React, { useEffect } from 'react';
-// Local
+// Internal
+import { Section, Timeline } from '@components/molecules';
+import { TourHero } from '@components/organisms';
 import { Layout } from '@components/layouts';
+import { useLayoutDispatch } from '@state/layout/layout-state';
+// External
+import { Box, Container, Grid, Typography } from '@material-ui/core';
 // Types
 import { Tour } from '@type/tour';
 // API
 import { getAllTours, getTourFromSlug } from '@api/tours';
-import { Typography } from '@material-ui/core';
-import { TourHero } from '@components/organisms/tour-hero';
-import { useLayoutDispatch } from '@state/layout/layout-state';
+import { TourCarousel } from '@components/organisms/tour-carousel';
+import { TourMap } from '@components/molecules/tour-map';
 
 interface TourPgaeProps {
   tour: Tour;
@@ -29,6 +33,19 @@ const TourPage: React.FC<TourPgaeProps> = ({ tour }) => {
   return (
     <Layout>
       <TourHero tour={tour} />
+      <TourCarousel />
+      <Box position="relative">
+        <Grid container>
+          <Grid item xs={12} md={6}>
+            <TourMap />
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <Container>
+              <Timeline></Timeline>
+            </Container>
+          </Grid>
+        </Grid>
+      </Box>
     </Layout>
   );
 };

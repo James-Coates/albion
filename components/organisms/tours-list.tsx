@@ -8,11 +8,11 @@ import { FadeOnScroll } from '@components/animations';
 // Types
 import { Tour } from '@type/tour';
 
-interface TourListProps {
+interface ToursListProps {
   tours: Tour[];
 }
 
-export const TourList: React.FC<TourListProps> = ({ tours }) => {
+export const ToursList: React.FC<ToursListProps> = ({ tours }) => {
   return (
     <Grid container spacing={4}>
       {tours.map((tour) => (
