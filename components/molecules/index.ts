@@ -7,6 +7,7 @@ export * from './portal';
 export * from './play-button';
 export * from './social-link';
 export * from './tour-card';
+export * from './tour-map';
 export * from './section-intro-copy';
 export * from './section-intro-heading';
 export * from './split-content';

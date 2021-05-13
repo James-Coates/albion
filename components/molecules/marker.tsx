@@ -8,7 +8,9 @@ interface MarkerProps {
     title: string;
   };
   text: string;
-  onMarkerClick: any;
+  lat?: number;
+  lng?: number;
+  onMarkerClick?: any;
 }
 
 const Wrapper = styled(Box)`
@@ -39,7 +41,7 @@ export const Marker: FC<MarkerProps> = ({
       color="secondary.main"
       height={40}
       width={40}
-      onClick={() => onMarkerClick(data)}
+      onClick={onMarkerClick ? () => onMarkerClick(data) : undefined}
     >
       <MapPin height="100%" />
       <TextBox bgcolor="secondary.main">

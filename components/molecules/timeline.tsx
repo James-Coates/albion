@@ -1,53 +1,34 @@
 import { Box, Typography } from '@material-ui/core';
+import { SanityImageSource } from '@sanity/image-url/lib/types/types';
+import { motion, Variants } from 'framer-motion';
 import { isOdd } from 'helpers';
 import Image from 'next/image';
-import { FC } from 'react';
+import { FC, useState } from 'react';
+import { urlFor } from 'sanity-client.config';
 import styled, { css } from 'styled-components';
+import { BlockContent, BlockContentProps } from './block-content';
 import { TimelineItem } from './timeline-item';
 
-const fakeData = [
-  {
-    heading: 'Pickup',
-    subHeading: '9:00am',
-    copy:
-      'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Veritatis mollitia harum aliquam aspernatur vel odio eos quia error, pariatur ea porro labore praesentium provident sint, reprehenderit magnam reiciendis voluptatum. Minus eaque cum a aliquam dolore provident quos commodi ad. Dolores.',
-    label: 'London Station',
-  },
-  {
-    heading: 'Heading',
-    subHeading: 'Sub Heading',
-    copy:
-      'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Veritatis mollitia harum aliquam aspernatur vel odio eos quia error, pariatur ea porro labore praesentium provident sint, reprehenderit magnam reiciendis voluptatum. Minus eaque cum a aliquam dolore provident quos commodi ad. Dolores.',
-    label: 'label',
-    image: 'https://source.unsplash.com/random',
-  },
-  {
-    heading: 'Heading',
-    subHeading: 'Sub Heading',
-    copy:
-      'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Veritatis mollitia harum aliquam aspernatur vel odio eos quia error, pariatur ea porro labore praesentium provident sint, reprehenderit magnam reiciendis voluptatum. Minus eaque cum a aliquam dolore provident quos commodi ad. Dolores.',
-    label: 'label',
-    image: 'https://source.unsplash.com/random',
-  },
-  {
-    heading: 'Heading',
-    subHeading: 'Sub Heading',
-    copy:
-      'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Veritatis mollitia harum aliquam aspernatur vel odio eos quia error, pariatur ea porro labore praesentium provident sint, reprehenderit magnam reiciendis voluptatum. Minus eaque cum a aliquam dolore provident quos commodi ad. Dolores.',
-    label: 'label',
-    image: 'https://source.unsplash.com/random',
-  },
-  {
-    heading: 'Heading',
-    subHeading: 'Sub Heading',
-    copy:
-      'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Veritatis mollitia harum aliquam aspernatur vel odio eos quia error, pariatur ea porro labore praesentium provident sint, reprehenderit magnam reiciendis voluptatum. Minus eaque cum a aliquam dolore provident quos commodi ad. Dolores.',
-    label: 'label',
-    image: 'https://source.unsplash.com/random',
-  },
-];
+export interface TimelineItemType {
+  label: string;
+  heading: string;
+  overline: string;
+  content: BlockContentProps;
+  image?: SanityImageSource;
+}
 
 interface TimelineProps {
+  type?: 'full' | 'alternating';
+  items: TimelineItemType[];
+  activeItem?: number;
+  onItemVisibilityChange?: (
+    index: number,
+    inView: boolean,
+    entry: IntersectionObserverEntry,
+  ) => void;
+}
+
+interface WrapperProps {
   type?: 'full' | 'alternating';
 }
 
@@ -83,7 +64,7 @@ const LayoutItem = styled.div<LayoutItemProps>`
   `}
 `;
 
-const Wrapper = styled.div<TimelineProps>`
+const Wrapper = styled.div<WrapperProps>`
   position: relative;
   display: flex;
   flex-direction: column;
@@ -143,41 +124,63 @@ const IndicatorLabel = styled.div`
   padding: 4px;
 `;
 
-export const Timeline: FC<TimelineProps> = ({ type }) => {
+const itemVariants: Variants = {
+  rest: { opacity: 0.2, y: 0 },
+  active: { opacity: 1, y: -40 },
+};
+
+export const Timeline: FC<TimelineProps> = ({
+  items,
+  type,
+  activeItem,
+  onItemVisibilityChange,
+}) => {
   return (
     <Wrapper type={type}>
       <Line />
-      {fakeData.map((item, i) => (
-        <LayoutItem
+      {items.map((item, i) => (
+        <motion.div
+          variants={itemVariants}
+          animate={activeItem === i ? 'active' : 'rest'}
+          transition={{ duration: 1 }}
           key={i}
-          $reverse={type === 'alternating' ? isOdd(i) : true}
         >
-          <Indicator>
-            <IndicatorLabel>
-              <Typography variant="body2">{item.label}</Typography>
-            </IndicatorLabel>
-          </Indicator>
-          <TimelineItem index={i}>
-            {item.image ? (
-              <Box pt="55%" position="relative" mb={4}>
-                <Image
-                  src={item.image}
-                  layout="fill"
-                  objectFit="cover"
-                ></Image>
-              </Box>
-            ) : null}
-            <Typography variant="body2" gutterBottom>
-              {item.subHeading}
-            </Typography>
-            <Typography variant="h3" gutterBottom>
-              {item.heading}
-            </Typography>
-            <Typography variant="body1" gutterBottom>
-              {item.copy}
-            </Typography>
-          </TimelineItem>
-        </LayoutItem>
+          <LayoutItem
+            $reverse={type === 'alternating' ? isOdd(i) : true}
+          >
+            <Indicator>
+              <IndicatorLabel>
+                <Typography variant="body2">{item.label}</Typography>
+              </IndicatorLabel>
+            </Indicator>
+            <TimelineItem
+              index={i}
+              onVisibilityChange={
+                onItemVisibilityChange
+                  ? (inView, entry) =>
+                      onItemVisibilityChange(i, inView, entry)
+                  : undefined
+              }
+            >
+              {item.image ? (
+                <Box pt="55%" position="relative" mb={4}>
+                  <Image
+                    src={urlFor(item.image).url() || ''}
+                    layout="fill"
+                    objectFit="cover"
+                  ></Image>
+                </Box>
+              ) : null}
+              <Typography variant="overline" gutterBottom>
+                {item.overline}
+              </Typography>
+              <Typography variant="h3" gutterBottom>
+                {item.heading}
+              </Typography>
+              <BlockContent blocks={item.content} />
+            </TimelineItem>
+          </LayoutItem>
+        </motion.div>
       ))}
     </Wrapper>
   );

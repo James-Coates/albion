@@ -1,6 +1,8 @@
 import { BackgroundImage } from '@components/atoms';
+import { CarouselCard } from '@components/molecules/carousel-card';
 import {
   Box,
+  Container,
   Typography,
   useMediaQuery,
   useTheme,
@@ -10,8 +12,12 @@ import React from 'react';
 import styled from 'styled-components';
 import SwiperCore, { Navigation, Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import { ArrowLeft, ArrowRight } from '@styled-icons/bootstrap';
+import { CarouselNavigationButton } from '@components/molecules/carousel-navigation-button';
 
 interface TourCarouselProps {}
+
+SwiperCore.use([Navigation]);
 
 const slides = {
   summary:
@@ -50,7 +56,14 @@ const slides = {
 
 const Wrapper = styled(SwiperSlide)`
   padding: 20vh 0;
-  background-color: #efefef;
+  background-color: ${({ theme }) =>
+    theme.palette.background.default};
+  position: relative;
+
+  .swiper-container {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
   .swiper-slide {
     width: auto;
 
@@ -61,45 +74,63 @@ const Wrapper = styled(SwiperSlide)`
   }
 `;
 
-const TourCarouselImageBox = styled.div``;
-
 export const TourCarousel: React.FC = () => {
   const theme = useTheme();
   const mdUp = useMediaQuery(theme.breakpoints.up('sm'));
+  const prevRef = React.useRef(null);
+  const nextRef = React.useRef(null);
+
   return (
     <Wrapper>
       {!mdUp ? (
-        <Typography variant="body1">{slides.summary}</Typography>
-      ) : null}
-      <Swiper slidesPerView="auto" spaceBetween={40}>
-        <SwiperSlide>
-          <Box
-            width="60vw"
-            height="80vh"
-            display="flex"
-            justifyContent="center"
-            alignItems="center"
-            padding="10%"
-          >
+        <Container>
+          <Box mb={4}>
             <Typography variant="subtitle1">
               {slides.summary}
             </Typography>
           </Box>
-        </SwiperSlide>
-        {slides.images.map((image) => (
+        </Container>
+      ) : null}
+      <Swiper
+        slidesPerView="auto"
+        spaceBetween={mdUp ? 40 : 10}
+        freeMode={true}
+        navigation={{
+          nextEl: nextRef.current,
+          prevEl: prevRef.current,
+        }}
+      >
+        {mdUp ? (
           <SwiperSlide>
-            <Box height="80vh">
-              <Box pr={image.type === 'wide' ? '120vh' : '54vh'}>
-                <BackgroundImage
-                  src={image.url}
-                  objectFit="cover"
-                  zIndex="-1"
-                />
-                <Typography variant="body1">{image.title}</Typography>
+            <CarouselCard type="wide">
+              <Box top="25%" left="25%" padding="10%" width="50%">
+                <Typography variant="subtitle1">
+                  {slides.summary}
+                </Typography>
               </Box>
-            </Box>
+            </CarouselCard>
+          </SwiperSlide>
+        ) : null}
+
+        {slides.images.map((image, i) => (
+          <SwiperSlide key={i}>
+            <CarouselCard type={image.type}>
+              <BackgroundImage
+                src={image.url}
+                objectFit="cover"
+                zIndex="-1"
+              />
+              {/* <Typography variant="body1">{image.title}</Typography> */}
+            </CarouselCard>
           </SwiperSlide>
         ))}
+
+        <CarouselNavigationButton direction="left" ref={prevRef}>
+          <ArrowLeft />
+        </CarouselNavigationButton>
+        <CarouselNavigationButton direction="right" ref={nextRef}>
+          <ArrowRight />
+        </CarouselNavigationButton>
       </Swiper>
     </Wrapper>
   );

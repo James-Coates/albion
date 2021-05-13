@@ -4,6 +4,10 @@ import styled, { css } from 'styled-components';
 
 interface TimelineItemProps {
   index: number;
+  onVisibilityChange?: (
+    visible: boolean,
+    entry: IntersectionObserverEntry,
+  ) => void;
 }
 
 const Wrapper = styled.div`
@@ -13,13 +17,11 @@ const Wrapper = styled.div`
 
 export const TimelineItem: FC<TimelineItemProps> = ({
   index,
+  onVisibilityChange,
   children,
 }) => {
-  function onChange(x: any) {
-    console.log(x, index);
-  }
   return (
-    <InView onChange={onChange}>
+    <InView onChange={onVisibilityChange} threshold={[0.25, 0.75]}>
       {({ inView, ref, entry }) => (
         <Wrapper ref={ref}>{children}</Wrapper>
       )}

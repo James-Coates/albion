@@ -59,7 +59,8 @@ export default {
     {
       title: 'Itinerary',
       name: 'itinerary',
-      type: 'itinerary',
+      type: 'array',
+      of: [{ type: 'itineraryItem' }],
     },
     {
       title: 'Inclusions Section',

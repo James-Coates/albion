@@ -1,17 +1,16 @@
 import React, { useEffect } from 'react';
 // Internal
-import { Section, Timeline } from '@components/molecules';
-import { TourHero } from '@components/organisms';
-import { Layout } from '@components/layouts';
 import { useLayoutDispatch } from '@state/layout/layout-state';
-// External
-import { Box, Container, Grid, Typography } from '@material-ui/core';
+import { Layout } from '@components/layouts';
+import {
+  TourHero,
+  TourCarousel,
+  TourItinerary,
+} from '@components/organisms';
 // Types
 import { Tour } from '@type/tour';
 // API
 import { getAllTours, getTourFromSlug } from '@api/tours';
-import { TourCarousel } from '@components/organisms/tour-carousel';
-import { TourMap } from '@components/molecules/tour-map';
 
 interface TourPgaeProps {
   tour: Tour;
@@ -30,22 +29,15 @@ const TourPage: React.FC<TourPgaeProps> = ({ tour }) => {
     setHeaderFloat(false);
   }, []);
 
+  console.log(tour);
+
   return (
     <Layout>
       <TourHero tour={tour} />
       <TourCarousel />
-      <Box position="relative">
-        <Grid container>
-          <Grid item xs={12} md={6}>
-            <TourMap />
-          </Grid>
-          <Grid item xs={12} md={6}>
-            <Container>
-              <Timeline></Timeline>
-            </Container>
-          </Grid>
-        </Grid>
-      </Box>
+      {tour.itinerary ? (
+        <TourItinerary itinerary={tour.itinerary} />
+      ) : null}
     </Layout>
   );
 };
