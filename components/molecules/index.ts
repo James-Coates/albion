@@ -16,3 +16,8 @@ export * from './split-content-copy';
 export * from './section';
 export * from './timeline';
 export * from './timeline-item';
+export * from './icon-item';
+export * from './carousel-card';
+export * from './carousel-card-header';
+export * from './carousel-card-text';
+export * from './carousel-navigation-button';

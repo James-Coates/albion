@@ -37,10 +37,6 @@ const Wrapper = styled.div<CarouselCardProps>`
 
 const Inner = styled.div`
   position: relative;
-
-  * {
-    position: absolute;
-  }
 `;
 
 export const CarouselCard: React.FC<CarouselCardProps> = ({

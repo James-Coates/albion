@@ -54,7 +54,7 @@ export const TourHero: React.FC<TourHeroProps> = ({
   handleScrollButtonClick,
 }) => (
   <Wrapper color="common.white">
-    <Backdrop zIndex={-1} opacity={0.3} />
+    <Backdrop zIndex={-1} opacity={0.4} />
     <BackgroundImage
       src={urlFor(tour.mainImage).url() || ''}
       objectFit="cover"
@@ -68,9 +68,6 @@ export const TourHero: React.FC<TourHeroProps> = ({
         <Typography variant="h2" gutterBottom component="h1">
           {tour.title}
         </Typography>
-        {tour.summary ? (
-          <BlockContent blocks={tour.summary}></BlockContent>
-        ) : null}
       </Content>
 
       <ScrollButtonContainer onClick={handleScrollButtonClick}>

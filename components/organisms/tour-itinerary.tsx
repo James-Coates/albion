@@ -34,7 +34,7 @@ export const TourItinerary: React.FC<TourItineraryProps> = ({
   }
 
   return (
-    <Box position="relative">
+    <Box position="relative" color="text.primary">
       <Grid container>
         <Grid item xs={12} md={6}>
           <TourMap itinerary={itinerary} />

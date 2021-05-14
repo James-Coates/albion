@@ -35,9 +35,9 @@ interface WrapperProps {
 const Line = styled.div`
   position: absolute;
   height: 100%;
-  width: 4px;
-  background-color: #e7e7e7;
-  left: 0px;
+  width: 1px;
+  background-color: #ececec;
+  left: 1px;
 `;
 
 const LayoutItem = styled.div<LayoutItemProps>`
@@ -108,7 +108,7 @@ const Indicator = styled.div`
   position: absolute;
   height: 40px;
   width: 4px;
-  background-color: #0c1352;
+  background-color: ${({ theme }) => theme.palette.secondary.main};
   left: -40px;
   top: 40%;
   text-align: center;

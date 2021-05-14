@@ -9,11 +9,11 @@ import internalLink from './objects/internal-link';
 import link from './objects/link';
 import slides from './objects/slides';
 import mapData from './objects/map-data';
-import inclusionsData from './objects/inclusions-data';
 import siteSettings from './documents/site-settings';
 import landingPage from './documents/landing-page';
 import feature from './documents/feature';
 import itineraryItem from './objects/itinerary-item';
+import customImage from './objects/custom-image';
 
 // Then we give our schema to the builder and provide the result to Sanity
 export default createSchema({
@@ -31,8 +31,8 @@ export default createSchema({
     slides,
     itineraryItem,
     mapData,
-    inclusionsData,
     // internalLink,
     simplePortableText,
+    customImage,
   ]),
 });

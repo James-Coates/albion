@@ -28,6 +28,14 @@ export const serializers = {
   },
 };
 
+export const fixedSerializers = (variant) => ({
+  types: {
+    block: (props) => (
+      <Typography variant={variant}>{props.children}</Typography>
+    ),
+  },
+});
+
 export const previewClient = sanityClient({
   ...options,
   useCdn: false,

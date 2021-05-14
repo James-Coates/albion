@@ -11,28 +11,31 @@ export const CarouselNavigationButton = styled.button<CarouselNavigationButtonPr
   border: none;
   cursor: pointer;
   padding: 16px;
-  border: 2px solid ${({ theme }) => theme.palette.primary.main};
+  background-color: ${({ theme }) => theme.palette.primary.dark};
+  border: 1px solid ${({ theme }) => theme.palette.primary.main};
   z-index: 2;
-  opacity: 0.6;
+  /* opacity: 0.6; */
   transition: opacity 0.2s ease-out;
   position: relative;
   margin: 16px;
   margin-left: 0;
+  color: ${({ theme }) => theme.palette.common.white};
 
-  &:hover {
+  /* &:hover {
     opacity: 1;
-  }
+  } */
 
   ${({ theme }) => css`
     ${theme.breakpoints.up('md')} {
       position: absolute;
-      top: calc(50% - 32px);
+      top: calc(70%);
       color: ${({ theme }) => theme.palette.common.white};
       border-color: ${({ theme }) => theme.palette.common.white};
     }
   `}
 
-  &.swiper-button-disabled {
+  &.swiper-button-disabled,
+  [disabled] {
     opacity: 0;
     cursor: default;
   }

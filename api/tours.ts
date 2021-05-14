@@ -10,7 +10,7 @@ const tourPostFields: string = `
   destinations,
   mainImage,
   summary,
-  slides,
+  gallery,
   itinerary,
   inclusionsData
 `;

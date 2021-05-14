@@ -17,6 +17,9 @@ let theme = createMuiTheme({
       dark: '#CB9303',
       contrastText: '#202436',
     },
+    text: {
+      primary: '#383D6C',
+    },
   },
   spacing: (factor) => `${8 * factor}px`,
   typography: {
@@ -75,6 +78,18 @@ let theme = createMuiTheme({
         borderRadius: 0,
         height: 40,
         padding: '0 2em',
+      },
+    },
+    MuiList: {
+      root: {
+        padding: 0,
+      },
+    },
+    MuiListItem: {
+      root: {
+        padding: 0,
+        display: 'list-item',
+        listStyle: 'disc',
       },
     },
   },

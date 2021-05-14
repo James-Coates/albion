@@ -117,7 +117,7 @@ const Home: React.FC<LandingProps> = ({
             <FadeOnScroll>
               <SectionIntroHeading>
                 <Typography variant="h2" color="primary">
-                  Explore our Featured Tours
+                  What make our tours special?
                 </Typography>
               </SectionIntroHeading>
               <SectionIntroCopy>

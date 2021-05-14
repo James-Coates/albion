@@ -41,7 +41,6 @@ export const TourMap: React.FC<TourMapProps> = ({ itinerary }) => {
           />
         ))}
       </GoogleMapReact>
-      <Typography>test</Typography>
     </Wrapper>
   );
 };

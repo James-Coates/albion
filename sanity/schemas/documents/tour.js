@@ -47,9 +47,19 @@ export default {
       description: 'Enter price in GBP',
     },
     {
-      title: 'Slides',
-      name: 'slides',
-      type: 'slides',
+      title: 'Gallery',
+      name: 'gallery',
+      type: 'object',
+      fields: [
+        {
+          name: 'images',
+          title: 'Photos',
+          description:
+            'Add images to be shown in the page carousel below the top section.',
+          type: 'array',
+          of: [{ type: 'customImage' }],
+        },
+      ],
     },
     {
       title: 'Map Data',
@@ -65,7 +75,26 @@ export default {
     {
       title: 'Inclusions Section',
       name: 'inclusionsData',
-      type: 'inclusionsData',
+      type: 'object',
+      fields: [
+        {
+          title: 'Intro Copy',
+          name: 'intro',
+          type: 'simplePortableText',
+        },
+        {
+          title: 'Inclusions',
+          name: 'inclusions',
+          type: 'array',
+          of: [{ type: 'string' }],
+        },
+        {
+          title: 'Exclusions',
+          name: 'exclusions',
+          type: 'array',
+          of: [{ type: 'string' }],
+        },
+      ],
     },
   ],
 };

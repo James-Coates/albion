@@ -5,4 +5,5 @@ export * from './landing-hero';
 export * from './tour-hero';
 export * from './tour-carousel';
 export * from './tour-itinerary';
+export * from './tour-inclusions';
 export * from './tours-list';

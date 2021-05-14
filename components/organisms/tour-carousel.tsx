@@ -13,48 +13,25 @@ import styled from 'styled-components';
 import SwiperCore, { Navigation, Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { ArrowLeft, ArrowRight } from '@styled-icons/bootstrap';
-import { CarouselNavigationButton } from '@components/molecules/carousel-navigation-button';
+import {
+  BlockContent,
+  CarouselCardHeader,
+  CarouselCardText,
+  CarouselNavigationButton,
+} from '@components/molecules';
+import { CustomImage } from '@type/custom-image';
+import { fixedSerializers, urlFor } from 'sanity-client.config';
+import { BlockContentProps } from '@sanity/block-content-to-react';
 
-interface TourCarouselProps {}
+interface TourCarouselProps {
+  heading?: string;
+  summary?: BlockContentProps;
+  images?: CustomImage[];
+}
 
 SwiperCore.use([Navigation]);
 
-const slides = {
-  summary:
-    'Lorem ipsum dolor, sit amet consectetur adipisicing elit. A tenetur animi culpa fugiat temporibus dicta iste et. Rem, architecto nisi!',
-  images: [
-    {
-      title: 'Lorem ipsum',
-      description:
-        'Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut, rem!',
-      url: 'https://source.unsplash.com/400x800',
-      type: 'narrow',
-    },
-    {
-      title: 'Lorem ipsum',
-      description:
-        'Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut, rem!',
-      url: 'https://source.unsplash.com/800x400',
-      type: 'wide',
-    },
-    {
-      title: 'Lorem ipsum',
-      description:
-        'Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut, rem!',
-      url: 'https://source.unsplash.com/400x800',
-      type: 'narrow',
-    },
-    {
-      title: 'Lorem ipsum',
-      description:
-        'Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut, rem!',
-      url: 'https://source.unsplash.com/800x400',
-      type: 'wide',
-    },
-  ],
-};
-
-const Wrapper = styled(SwiperSlide)`
+const Wrapper = styled(Box)`
   padding: 20vh 0;
   background-color: ${({ theme }) =>
     theme.palette.background.default};
@@ -74,20 +51,28 @@ const Wrapper = styled(SwiperSlide)`
   }
 `;
 
-export const TourCarousel: React.FC = () => {
+export const TourCarousel: React.FC<TourCarouselProps> = ({
+  images,
+  summary,
+  heading,
+}) => {
   const theme = useTheme();
   const mdUp = useMediaQuery(theme.breakpoints.up('sm'));
   const prevRef = React.useRef(null);
   const nextRef = React.useRef(null);
 
   return (
-    <Wrapper>
+    <Wrapper color="text.primary">
       {!mdUp ? (
         <Container>
           <Box mb={4}>
-            <Typography variant="subtitle1">
-              {slides.summary}
+            <Typography variant="h3" component="h2" gutterBottom>
+              {heading}
             </Typography>
+            <BlockContent
+              blocks={summary}
+              serializers={fixedSerializers('subtitle1')}
+            ></BlockContent>
           </Box>
         </Container>
       ) : null}
@@ -103,27 +88,37 @@ export const TourCarousel: React.FC = () => {
         {mdUp ? (
           <SwiperSlide>
             <CarouselCard type="wide">
-              <Box top="25%" left="25%" padding="10%" width="50%">
-                <Typography variant="subtitle1">
-                  {slides.summary}
+              <CarouselCardText>
+                <Typography variant="h3" component="h2" gutterBottom>
+                  {heading}
                 </Typography>
-              </Box>
+                <BlockContent
+                  blocks={summary}
+                  serializers={fixedSerializers('subtitle1')}
+                ></BlockContent>
+              </CarouselCardText>
             </CarouselCard>
           </SwiperSlide>
         ) : null}
 
-        {slides.images.map((image, i) => (
-          <SwiperSlide key={i}>
-            <CarouselCard type={image.type}>
-              <BackgroundImage
-                src={image.url}
-                objectFit="cover"
-                zIndex="-1"
-              />
-              {/* <Typography variant="body1">{image.title}</Typography> */}
-            </CarouselCard>
-          </SwiperSlide>
-        ))}
+        {images
+          ? images.map((image, i) => (
+              <SwiperSlide key={i}>
+                <CarouselCard type={image.type}>
+                  <BackgroundImage
+                    src={urlFor(image.image).url() || ''}
+                    objectFit="cover"
+                    zIndex="-1"
+                  />
+                  <CarouselCardHeader>
+                    <Typography variant="overline">
+                      {image.title}
+                    </Typography>
+                  </CarouselCardHeader>
+                </CarouselCard>
+              </SwiperSlide>
+            ))
+          : null}
 
         <CarouselNavigationButton direction="left" ref={prevRef}>
           <ArrowLeft />

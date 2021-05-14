@@ -6,11 +6,13 @@ import {
   TourHero,
   TourCarousel,
   TourItinerary,
+  TourInclusions,
 } from '@components/organisms';
 // Types
 import { Tour } from '@type/tour';
 // API
 import { getAllTours, getTourFromSlug } from '@api/tours';
+import { urlFor } from 'sanity-client.config';
 
 interface TourPgaeProps {
   tour: Tour;
@@ -34,9 +36,18 @@ const TourPage: React.FC<TourPgaeProps> = ({ tour }) => {
   return (
     <Layout>
       <TourHero tour={tour} />
-      <TourCarousel />
+      {tour.gallery ? (
+        <TourCarousel
+          summary={tour.summary}
+          images={tour.gallery.images}
+          heading={tour.destinations}
+        />
+      ) : null}
       {tour.itinerary ? (
         <TourItinerary itinerary={tour.itinerary} />
+      ) : null}
+      {tour.inclusionsData ? (
+        <TourInclusions inclusions={tour.inclusionsData} />
       ) : null}
     </Layout>
   );

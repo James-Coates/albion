@@ -1,6 +1,7 @@
 import { BlockContentProps } from '@sanity/block-content-to-react';
 import { SanityImageSource } from '@sanity/image-url/lib/types/types';
-import { InclusionsData } from './inclusions';
+import { CustomImage } from './custom-image';
+import { Inclusions } from './inclusions';
 import { ItineraryItem } from './ItineraryItem';
 
 export interface Tour {
@@ -14,6 +15,9 @@ export interface Tour {
   // availability: string;
   // slides?: Slide[];
   // mapData?: MapData;
+  gallery?: {
+    images: CustomImage[];
+  };
   itinerary?: ItineraryItem[];
-  inclusionsData: InclusionsData;
+  inclusionsData: Inclusions;
 }
