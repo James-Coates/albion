@@ -16,14 +16,7 @@ const queryTypes = [
 ];
 
 export const ContactForm: React.FC = () => {
-  const { register, errors, handleSubmit } = useForm();
-
-  const [queryType, setQueryType] = React.useState<string>('');
-  const handleChange = (
-    event: React.ChangeEvent<{ value: unknown }>,
-  ) => {
-    setQueryType(event.target.value as string);
-  };
+  const { register, errors, handleSubmit, setValue } = useForm();
   const onSubmit = (data: any) => console.log(data);
 
   return (
@@ -90,15 +83,24 @@ export const ContactForm: React.FC = () => {
         </Grid>
         <Grid item xs={12}>
           <TextField
-            name="type"
-            id="type"
+            name="queryType"
+            id="queryType"
             required
             select
             label="What's your query about?"
-            value={queryType}
-            onChange={handleChange}
+            inputRef={
+              register({
+                name: 'queryType',
+                required: true,
+              }) as any
+            }
+            defaultValue=""
+            onChange={(e) =>
+              setValue('queryType', e.target.value, {
+                shouldValidate: true,
+              })
+            }
             fullWidth
-            inputRef={register({ required: true })}
             error={errors?.type !== undefined}
             helperText={
               errors?.type
