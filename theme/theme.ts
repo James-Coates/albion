@@ -76,8 +76,8 @@ let theme = createMuiTheme({
     MuiButton: {
       root: {
         borderRadius: 0,
-        height: 40,
-        padding: '0 2em',
+        height: 56,
+        padding: '0 3em',
       },
     },
     MuiList: {
@@ -96,6 +96,9 @@ let theme = createMuiTheme({
   props: {
     MuiTextField: {
       variant: 'outlined',
+      InputLabelProps: {
+        shrink: true,
+      },
     },
     MuiButton: {
       variant: 'contained',
