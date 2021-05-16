@@ -47,6 +47,7 @@ export default class Document extends NextDocument {
         <body>
           <Main />
           <div id="mobile-menu-root"></div>
+          <div id="modal-root"></div>
           <NextScript />
         </body>
       </Html>

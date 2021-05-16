@@ -16,7 +16,7 @@ export const ToursList: React.FC<ToursListProps> = ({ tours }) => {
   return (
     <Grid container spacing={4}>
       {tours.map((tour) => (
-        <Grid item md={6} key={tour._id}>
+        <Grid item xs={12} md={6} key={tour._id}>
           <FadeOnScroll>
             <Box>
               <Link href={`/tours/${tour.slug}`}>

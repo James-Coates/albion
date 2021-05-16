@@ -22,3 +22,4 @@ export * from './carousel-card-header';
 export * from './carousel-card-text';
 export * from './carousel-navigation-button';
 export * from './contact-form';
+export * from './video-wrapper';

@@ -36,6 +36,12 @@ const GlobalStyle = createGlobalStyle<GlobalStyleProps>`
     color: inherit;
   }
 
+  button {
+    background-color: transparent;
+    outline: none;
+    border: none;
+  }
+
   #mobile-menu-root {
     z-index: 100;
     position: relative;

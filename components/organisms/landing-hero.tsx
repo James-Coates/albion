@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import styled, { css } from 'styled-components';
 // Internal
 import { Backdrop, ScrollButton } from '@components/atoms';
@@ -10,6 +10,8 @@ import {
 } from '@components/molecules';
 // External
 import { Box, Typography } from '@material-ui/core';
+import { Modal } from '@components/molecules/modal';
+import YouTube from 'react-youtube';
 
 interface LandingHeroProps {
   handleScrollButtonClick?: () => any;
@@ -51,37 +53,82 @@ const ScrollButtonContainer = styled.div`
   color: white;
 `;
 
+const VideoWrapper = styled.div`
+  position: relative;
+
+  height: 100%;
+
+  & > div {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+  }
+`;
+
 export const LandingHero: React.FC<LandingHeroProps> = ({
   mainHeading,
   mainCopy,
   handleScrollButtonClick,
-}) => (
-  <Wrapper color="common.white">
-    <Backdrop zIndex={-1} opacity={0.5} />
-    <VideoCover autoPlay muted loop zIndex={-2}>
-      <source src="video/albion.mp4"></source>
-    </VideoCover>
-    <InnerWrapper>
-      <Content>
-        <Typography variant="h1" gutterBottom>
-          {mainHeading}
-        </Typography>
+}) => {
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
-        {mainCopy ? (
-          <BlockContent blocks={mainCopy}></BlockContent>
-        ) : null}
+  function handlePlayClick() {
+    if (videoRef.current) {
+      videoRef.current.pause();
+    }
+    setModalOpen(true);
+  }
 
-        <PlayButton></PlayButton>
-        <Box mt={2}>
-          <Typography variant="overline">
-            Preview the experience
+  function onModalCloseClick() {
+    setModalOpen(false);
+    if (videoRef.current) {
+      videoRef.current.play();
+    }
+  }
+
+  return (
+    <Wrapper color="common.white">
+      <Modal active={modalOpen} onCloseClick={onModalCloseClick}>
+        <VideoWrapper>
+          {modalOpen ? (
+            <YouTube
+              videoId="68XZgPMLp50"
+              opts={{ width: '100%', height: '100%' }}
+            />
+          ) : null}
+        </VideoWrapper>
+      </Modal>
+      <Backdrop zIndex={-1} opacity={0.5} />
+      <VideoCover autoPlay muted loop zIndex={-2} ref={videoRef}>
+        <source src="video/albion.mp4"></source>
+      </VideoCover>
+      <InnerWrapper>
+        <Content>
+          <Typography variant="h1" gutterBottom>
+            {mainHeading}
           </Typography>
-        </Box>
-      </Content>
 
-      <ScrollButtonContainer onClick={handleScrollButtonClick}>
-        <ScrollButton>Explore our tours</ScrollButton>
-      </ScrollButtonContainer>
-    </InnerWrapper>
-  </Wrapper>
-);
+          {mainCopy ? (
+            <BlockContent blocks={mainCopy}></BlockContent>
+          ) : null}
+
+          <button onClick={handlePlayClick}>
+            <PlayButton></PlayButton>
+          </button>
+          <Box mt={2}>
+            <Typography variant="overline">
+              Preview the experience
+            </Typography>
+          </Box>
+        </Content>
+
+        <ScrollButtonContainer onClick={handleScrollButtonClick}>
+          <ScrollButton>Explore our tours</ScrollButton>
+        </ScrollButtonContainer>
+      </InnerWrapper>
+    </Wrapper>
+  );
+};

@@ -5,6 +5,7 @@ export default {
   title: 'Tours',
   type: 'document',
   icon: GiTrail,
+  __experimental_actions: ['update', 'create', 'publish'],
   fields: [
     {
       title: 'Slug',
