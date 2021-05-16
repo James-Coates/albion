@@ -7,3 +7,4 @@ export * from './tour-carousel';
 export * from './tour-itinerary';
 export * from './tour-inclusions';
 export * from './tours-list';
+export * from './testimonials';

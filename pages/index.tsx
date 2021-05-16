@@ -15,7 +15,7 @@ import { useLayoutDispatch } from '@state/layout/layout-state';
 import { Box, Container, Grid, Typography } from '@material-ui/core';
 import { LandingHero } from '@components/organisms/landing-hero';
 import { TextButton } from '@components/atoms/text-button';
-import { ToursList } from '@components/organisms';
+import { Testimonials, ToursList } from '@components/organisms';
 import {
   BlockContent,
   Section,
@@ -30,12 +30,14 @@ import { Feature } from '@type/feature';
 import { urlFor } from 'sanity-client.config';
 import Image from 'next/image';
 import { isOdd } from '@lib/math';
+import { Testimonial } from '@type/testimonial';
 
 interface LandingProps {
   mainHeading: string;
   mainCopy?: BlockContentProps;
   tours: Tour[];
   featureList: Feature[];
+  testimonials: Testimonial[];
 }
 
 const Home: React.FC<LandingProps> = ({
@@ -43,6 +45,7 @@ const Home: React.FC<LandingProps> = ({
   mainHeading,
   mainCopy,
   featureList,
+  testimonials,
 }) => {
   const dispatch = useLayoutDispatch();
 
@@ -69,6 +72,8 @@ const Home: React.FC<LandingProps> = ({
   useEffect(() => {
     setHeaderFloat(false);
   }, []);
+
+  console.log(testimonials);
 
   return (
     <Layout>
@@ -112,60 +117,62 @@ const Home: React.FC<LandingProps> = ({
             </Box>
           </Container>
         </Section>
-        <Section>
-          <Container maxWidth="xl">
-            <FadeOnScroll>
-              <SectionIntroHeading>
-                <Typography variant="h2" color="primary">
-                  What make our tours special?
-                </Typography>
-              </SectionIntroHeading>
-              <SectionIntroCopy>
-                <Typography variant="body1">
-                  Lorem ipsum dolor sit amet consectetur adipisicing
-                  elit. Laborum, soluta veritatis totam officiis qui
-                  recusandae aliquam nobis. Doloribus placeat veniam
-                  laudantium, laborum consequatur quis dolorum, nulla
-                  magni in ducimus ipsa accusamus perspiciatis nostrum
-                  quam iure tenetur nobis tempora, blanditiis rerum?
-                </Typography>
-              </SectionIntroCopy>
-            </FadeOnScroll>
-          </Container>
-          {featureList.map((feature, i) => (
-            <Box my="12vh" key={i}>
-              <FadeOnScroll>
-                <SplitContent reverse={isOdd(i)}>
-                  <SplitContentImage>
-                    <Image
-                      src={urlFor(feature.image).url() || ''}
-                      layout="fill"
-                      objectFit="cover"
-                    />
-                  </SplitContentImage>
-                  <SplitContentCopy>
-                    <Typography
-                      variant="overline"
-                      gutterBottom
-                      color="textSecondary"
-                    >
-                      {feature.context}
-                    </Typography>
-                    <Typography
-                      variant="h3"
-                      gutterBottom
-                      color="primary"
-                    >
-                      {feature.heading}
-                    </Typography>
-                    <BlockContent blocks={feature.summary} />
-                  </SplitContentCopy>
-                </SplitContent>
-              </FadeOnScroll>
-            </Box>
-          ))}
-        </Section>
       </Element>
+
+      <Section>
+        <Container maxWidth="xl">
+          <FadeOnScroll>
+            <SectionIntroHeading>
+              <Typography variant="h2" color="primary">
+                What make our tours special?
+              </Typography>
+            </SectionIntroHeading>
+            <SectionIntroCopy>
+              <Typography variant="body1">
+                Lorem ipsum dolor sit amet consectetur adipisicing
+                elit. Laborum, soluta veritatis totam officiis qui
+                recusandae aliquam nobis. Doloribus placeat veniam
+                laudantium, laborum consequatur quis dolorum, nulla
+                magni in ducimus ipsa accusamus perspiciatis nostrum
+                quam iure tenetur nobis tempora, blanditiis rerum?
+              </Typography>
+            </SectionIntroCopy>
+          </FadeOnScroll>
+        </Container>
+        {featureList.map((feature, i) => (
+          <Box my="12vh" key={i}>
+            <FadeOnScroll>
+              <SplitContent reverse={isOdd(i)}>
+                <SplitContentImage>
+                  <Image
+                    src={urlFor(feature.image).url() || ''}
+                    layout="fill"
+                    objectFit="cover"
+                  />
+                </SplitContentImage>
+                <SplitContentCopy>
+                  <Typography
+                    variant="overline"
+                    gutterBottom
+                    color="textSecondary"
+                  >
+                    {feature.context}
+                  </Typography>
+                  <Typography
+                    variant="h3"
+                    gutterBottom
+                    color="primary"
+                  >
+                    {feature.heading}
+                  </Typography>
+                  <BlockContent blocks={feature.summary} />
+                </SplitContentCopy>
+              </SplitContent>
+            </FadeOnScroll>
+          </Box>
+        ))}
+      </Section>
+      <Testimonials testimonials={testimonials} />
     </Layout>
   );
 };
@@ -177,11 +184,18 @@ export async function getStaticProps(): Promise<{
     mainHeading = 'Main Heading',
     mainCopy = null,
     featureList = [],
+    testimonials = [],
   } = (await getLandingData()) || {};
   const tours = await getAllTours();
 
   return {
-    props: { tours, mainHeading, mainCopy, featureList },
+    props: {
+      tours,
+      mainHeading,
+      mainCopy,
+      featureList,
+      testimonials,
+    },
   };
 }
 

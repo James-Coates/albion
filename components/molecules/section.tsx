@@ -6,16 +6,16 @@ interface SectionProps extends BoxProps {
 }
 
 export const Section = styled(Box)<SectionProps>`
-  margin-top: 15vh;
-  margin-bottom: 15vh;
+  padding-top: 15vh;
+  padding-bottom: 15vh;
 
   ${({ $first, theme }) =>
     $first
       ? css`
-          margin-top: calc(15vh + 6rem);
+          padding-top: calc(15vh + 6rem);
 
           ${theme.breakpoints.up('lg')} {
-            margin-top: calc(15vh + 7.2rem);
+            padding-top: calc(15vh + 7.2rem);
           }
         `
       : null}

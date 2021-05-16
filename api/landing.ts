@@ -15,6 +15,12 @@ export async function getLandingData() {
       context,
       image,
     },
+    "testimonials": testimonials[]->{
+      content,
+      owner,
+      source,
+      image
+    }
   `;
 
   const query = '*[_type == "landingPage"]';

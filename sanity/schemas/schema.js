@@ -14,6 +14,7 @@ import landingPage from './documents/landing-page';
 import feature from './documents/feature';
 import itineraryItem from './objects/itinerary-item';
 import customImage from './objects/custom-image';
+import testimonial from './documents/testimonial';
 
 // Then we give our schema to the builder and provide the result to Sanity
 export default createSchema({
@@ -29,6 +30,7 @@ export default createSchema({
     // objects
     link,
     slides,
+    testimonial,
     itineraryItem,
     mapData,
     // internalLink,

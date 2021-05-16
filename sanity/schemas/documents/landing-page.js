@@ -23,13 +23,20 @@ export default {
       name: 'mainCopy',
       type: 'simplePortableText',
       title: 'Home Page Summary Text',
-      description: 'A summary or short piece of text shown below the main heading (Not Required).',
+      description:
+        'A summary or short piece of text shown below the main heading (Not Required).',
     },
     {
       name: 'featureList',
       type: 'array',
       title: 'Feature List',
       of: [{ type: 'reference', to: [{ type: 'feature' }] }],
+    },
+    {
+      name: 'testimonials',
+      type: 'array',
+      title: 'Testimonials',
+      of: [{ type: 'reference', to: [{ type: 'testimonial' }] }],
     },
 
     // {

@@ -51,6 +51,10 @@ let theme = createMuiTheme({
       fontSize: 24,
     },
     subtitle1: {
+      fontSize: 32,
+      lineHeight: 1.5,
+    },
+    subtitle2: {
       fontSize: 24,
       lineHeight: 1.5,
     },
