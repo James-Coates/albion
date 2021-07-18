@@ -4,9 +4,8 @@ import imageUrlBuilder from '@sanity/image-url';
 
 const options = {
   // Find your project ID and dataset in `sanity.json` in your studio project
-  dataset: 'develop',
+  dataset: 'production',
   projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
-  token: process.env.SANITY_API_TOKEN,
   useCdn: process.env.NODE_ENV === 'production',
   apiVersion: '2021-04-17', // use a UTC date string
   // useCdn == true gives fast, cheap responses using a globally distributed cache.

@@ -5,6 +5,22 @@ import { Box, Container, Grid, Typography } from '@material-ui/core';
 
 import { fill } from '@lib/styled-components/utils';
 import Link from 'next/link';
+import { SocialLink } from '@components/molecules';
+
+const links = [
+  {
+    name: 'instagram',
+    link: 'http://google.com',
+  },
+  {
+    name: 'twitter',
+    link: 'http://google.com',
+  },
+  {
+    name: 'tripadvisor',
+    link: 'http://google.com',
+  },
+];
 
 const FooterWrapper = styled(Box)`
   position: relative;
@@ -43,8 +59,10 @@ export const Footer: React.FC = () => (
                   </Link>
                 </Grid>
                 <Grid item>
-                  <Link href="/">
-                    <Typography variant="body2">Contact</Typography>
+                  <Link href="/contact">
+                    <a>
+                      <Typography variant="body2">Contact</Typography>
+                    </a>
                   </Link>
                 </Grid>
               </Grid>
@@ -53,7 +71,13 @@ export const Footer: React.FC = () => (
               <Typography component="h3" variant="h4" gutterBottom>
                 Follow us
               </Typography>
-              {/* <SocialLinks></SocialLinks> */}
+              <Grid container spacing={3}>
+                {links.map((item, i) => (
+                  <Grid item key={i}>
+                    <SocialLink name={item.name} link={item.link} />
+                  </Grid>
+                ))}
+              </Grid>
             </Grid>
           </Grid>
         </Grid>
@@ -63,14 +87,14 @@ export const Footer: React.FC = () => (
           <Grid item>
             <Grid container spacing={2}>
               <Grid item>
-                <Typography variant="body2" component="span">
+                {/* <Typography variant="body2" component="span">
                   hello
                 </Typography>
               </Grid>
               <Grid item>
                 <Typography variant="body2" component="span">
                   hello
-                </Typography>
+                </Typography> */}
               </Grid>
             </Grid>
           </Grid>
