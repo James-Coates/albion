@@ -1,10 +1,6 @@
-import {
-  createMuiTheme,
-  responsiveFontSizes,
-} from '@material-ui/core';
-import { Theme as MuiTheme } from '@material-ui/core/styles/createMuiTheme';
+import { createTheme, responsiveFontSizes } from '@material-ui/core';
 
-let theme = createMuiTheme({
+let theme = createTheme({
   palette: {
     primary: {
       light: '#546ccc',
@@ -21,7 +17,7 @@ let theme = createMuiTheme({
       primary: '#383D6C',
     },
   },
-  spacing: (factor) => `${8 * factor}px`,
+  spacing: (factor: number) => `${8 * factor}px`,
   typography: {
     htmlFontSize: 10,
     fontSize: 14,
@@ -76,44 +72,48 @@ let theme = createMuiTheme({
       letterSpacing: '0.1em',
     },
   },
-  overrides: {
+  components: {
     MuiButton: {
-      root: {
-        borderRadius: 0,
-        height: 56,
-        padding: '0 3em',
+      styleOverrides: {
+        root: {
+          borderRadius: 0,
+          height: 56,
+          padding: '0 3em',
+        },
+      },
+      defaultProps: {
+        variant: 'contained',
+        color: 'secondary',
+        disableElevation: true,
       },
     },
     MuiList: {
-      root: {
-        padding: 0,
+      styleOverrides: {
+        root: {
+          padding: 0,
+        },
       },
     },
     MuiListItem: {
-      root: {
-        padding: 0,
-        display: 'list-item',
-        listStyle: 'disc',
+      styleOverrides: {
+        root: {
+          padding: 0,
+          display: 'list-item',
+          listStyle: 'disc',
+        },
       },
     },
-  },
-  props: {
     MuiTextField: {
-      variant: 'outlined',
-      InputLabelProps: {
-        shrink: true,
+      defaultProps: {
+        variant: 'outlined',
+        InputLabelProps: {
+          shrink: true,
+        },
       },
-    },
-    MuiButton: {
-      variant: 'contained',
-      color: 'secondary',
-      disableElevation: true,
     },
   },
 });
 
 theme = responsiveFontSizes(theme);
-
-export type Theme = MuiTheme;
 
 export default theme;

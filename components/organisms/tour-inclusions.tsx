@@ -19,7 +19,7 @@ export const TourInclusions: React.FC<TourInclusionsProps> = ({
             What's included?
           </Typography>
         </Box>
-        <Grid container justify="space-between">
+        <Grid container justifyContent="space-between">
           <Grid item xs={12} md={5}>
             <Typography variant="h4" component="h3" color="primary">
               Included

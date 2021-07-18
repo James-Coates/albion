@@ -21,7 +21,7 @@ export const ContactForm: React.FC = () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <Grid container justify="space-between" spacing={4}>
+      <Grid container justifyContent="space-between" spacing={4}>
         <Grid item xs={12} md={6}>
           <TextField
             name="first"

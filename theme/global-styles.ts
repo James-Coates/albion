@@ -1,7 +1,7 @@
 import { createGlobalStyle, ThemeProps } from 'styled-components';
 import reset from 'styled-reset';
 import { normalize } from 'styled-normalize';
-import { Theme } from './theme';
+import { Theme } from '@material-ui/core';
 
 type GlobalStyleProps = ThemeProps<Theme>;
 

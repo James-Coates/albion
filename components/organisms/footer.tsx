@@ -83,7 +83,7 @@ export const Footer: React.FC = () => (
         </Grid>
       </Box>
       <Box color="grey.600">
-        <Grid container justify="space-between">
+        <Grid container justifyContent="space-between">
           <Grid item>
             <Grid container spacing={2}>
               <Grid item>
