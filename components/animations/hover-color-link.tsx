@@ -1,10 +1,11 @@
 import React from 'react';
-import { useTheme } from 'styled-components';
+// import { useTheme } from 'styled-components';
 import {
   HTMLMotionProps,
   motion,
   TargetAndTransition,
 } from 'framer-motion';
+import { useTheme } from '@material-ui/core';
 
 interface HoverColorLinkProps extends HTMLMotionProps<'a'> {
   color?: 'primary' | 'secondary';
