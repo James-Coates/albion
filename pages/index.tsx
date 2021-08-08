@@ -139,40 +139,44 @@ const Home: React.FC<LandingProps> = ({
             </SectionIntroCopy>
           </FadeOnScroll>
         </Container>
-        {featureList.map((feature, i) => (
-          <Box my="12vh" key={i}>
-            <FadeOnScroll>
-              <SplitContent reverse={isOdd(i)}>
-                <SplitContentImage>
-                  <Image
-                    src={urlFor(feature.image).url() || ''}
-                    layout="fill"
-                    objectFit="cover"
-                  />
-                </SplitContentImage>
-                <SplitContentCopy>
-                  <Typography
-                    variant="overline"
-                    gutterBottom
-                    color="textSecondary"
-                  >
-                    {feature.context}
-                  </Typography>
-                  <Typography
-                    variant="h3"
-                    gutterBottom
-                    color="primary"
-                  >
-                    {feature.heading}
-                  </Typography>
-                  <BlockContent blocks={feature.summary} />
-                </SplitContentCopy>
-              </SplitContent>
-            </FadeOnScroll>
-          </Box>
-        ))}
+        {featureList
+          ? featureList.map((feature, i) => (
+              <Box my="12vh" key={i}>
+                <FadeOnScroll>
+                  <SplitContent reverse={isOdd(i)}>
+                    <SplitContentImage>
+                      <Image
+                        src={urlFor(feature.image).url() || ''}
+                        layout="fill"
+                        objectFit="cover"
+                      />
+                    </SplitContentImage>
+                    <SplitContentCopy>
+                      <Typography
+                        variant="overline"
+                        gutterBottom
+                        color="textSecondary"
+                      >
+                        {feature.context}
+                      </Typography>
+                      <Typography
+                        variant="h3"
+                        gutterBottom
+                        color="primary"
+                      >
+                        {feature.heading}
+                      </Typography>
+                      <BlockContent blocks={feature.summary} />
+                    </SplitContentCopy>
+                  </SplitContent>
+                </FadeOnScroll>
+              </Box>
+            ))
+          : null}
       </Section>
-      <Testimonials testimonials={testimonials} />
+      {testimonials ? (
+        <Testimonials testimonials={testimonials} />
+      ) : null}
     </Layout>
   );
 };
