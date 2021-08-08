@@ -8,6 +8,8 @@ import { NavItem, SocialLink } from '@components/molecules';
 
 import { NavProps } from '.';
 
+import links from '../../../public/config/social-handles.json';
+
 const Break = styled.span`
   height: 24px;
   width: 1px;
@@ -20,21 +22,6 @@ const Wrapper = styled(motion.div)`
   display: flex;
   align-items: center;
 `;
-
-const links = [
-  {
-    name: 'instagram',
-    link: 'http://google.com',
-  },
-  {
-    name: 'twitter',
-    link: 'http://google.com',
-  },
-  {
-    name: 'tripadvisor',
-    link: 'http://google.com',
-  },
-];
 
 export const PrimaryNavLg: React.FC<NavProps> = ({ menuLinks }) => {
   return (

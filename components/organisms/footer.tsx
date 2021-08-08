@@ -6,21 +6,7 @@ import { Box, Container, Grid, Typography } from '@material-ui/core';
 import { fill } from '@lib/styled-components/utils';
 import Link from 'next/link';
 import { SocialLink } from '@components/molecules';
-
-const links = [
-  {
-    name: 'instagram',
-    link: 'http://google.com',
-  },
-  {
-    name: 'twitter',
-    link: 'http://google.com',
-  },
-  {
-    name: 'tripadvisor',
-    link: 'http://google.com',
-  },
-];
+import links from '../../public/config/social-handles.json';
 
 const FooterWrapper = styled(Box)`
   position: relative;
@@ -86,16 +72,7 @@ export const Footer: React.FC = () => (
         <Grid container justifyContent="space-between">
           <Grid item>
             <Grid container spacing={2}>
-              <Grid item>
-                {/* <Typography variant="body2" component="span">
-                  hello
-                </Typography>
-              </Grid>
-              <Grid item>
-                <Typography variant="body2" component="span">
-                  hello
-                </Typography> */}
-              </Grid>
+              <Grid item></Grid>
             </Grid>
           </Grid>
           <Grid item>
