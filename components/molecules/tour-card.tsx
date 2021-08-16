@@ -34,7 +34,7 @@ const CardBackdrop = styled(motion.div)`
 `;
 
 const backdropMotion: Variants = {
-  rest: { opacity: 0.2, transition: { duration: 0.6 } },
+  rest: { opacity: 0.3, transition: { duration: 0.6 } },
   hover: { opacity: 0.1, transition: { duration: 0.6 } },
 };
 

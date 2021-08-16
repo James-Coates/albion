@@ -70,6 +70,7 @@ let theme = createTheme({
     overline: {
       fontSize: 14,
       letterSpacing: '0.1em',
+      lineHeight: 1.5,
     },
   },
   components: {

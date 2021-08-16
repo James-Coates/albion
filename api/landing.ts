@@ -9,6 +9,16 @@ export async function getLandingData() {
   const postFields = `
     mainHeading,
     mainCopy,
+    "featuredTours": featuredTours[]->{
+      _id,
+      "slug": slug.current,
+      name,
+      title,
+      price,
+      destinations,
+      mainImage,
+      summary,
+    },
     "featureList": featureList[]->{
       heading,
       summary,

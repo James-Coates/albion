@@ -13,6 +13,7 @@ import { Tour } from '@type/tour';
 // API
 import { getAllTours, getTourFromSlug } from '@api/tours';
 import { urlFor } from 'sanity-client.config';
+import Head from 'next/head';
 
 interface TourPgaeProps {
   tour: Tour;
@@ -35,6 +36,9 @@ const TourPage: React.FC<TourPgaeProps> = ({ tour }) => {
 
   return (
     <Layout>
+      <Head>
+        <title>{tour.title} - Albion Touring</title>
+      </Head>
       <TourHero tour={tour} />
       {tour.gallery ? (
         <TourCarousel

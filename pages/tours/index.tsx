@@ -17,6 +17,7 @@ import {
   SectionIntroHeading,
 } from '@components/molecules';
 import { FadeOnScroll } from '@components/animations';
+import Head from 'next/head';
 
 interface ToursProps {
   tours: Tour[];
@@ -54,6 +55,9 @@ const Tours: React.FC<ToursProps> = ({ tours }) => {
 
   return (
     <Layout>
+      <Head>
+        <title>Our Tours across Britain - Albion Touring</title>
+      </Head>
       <Element name="start">
         <Section>
           <Container maxWidth="xl">

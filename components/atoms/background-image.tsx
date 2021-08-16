@@ -14,7 +14,7 @@ const Wrapper = styled(Box)`
   left: 0;
   right: 0;
   bottom: 0;
-  z-index: -1;
+  /* z-index: -1; */
 `;
 
 export const BackgroundImage: React.FC<BackgroundImageProps> = ({

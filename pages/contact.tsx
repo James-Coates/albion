@@ -8,6 +8,7 @@ import {
   SectionIntroCopy,
   SectionIntroHeading,
 } from '@components/molecules';
+import Head from 'next/head';
 
 const Contact: React.FC = () => {
   const dispatch = useLayoutDispatch();
@@ -28,6 +29,9 @@ const Contact: React.FC = () => {
 
   return (
     <Layout>
+      <Head>
+        <title>Contact us - Albion Touring</title>
+      </Head>
       <Section $first color="text.primary">
         <Container maxWidth="xl">
           <SectionIntroHeading>

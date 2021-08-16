@@ -25,9 +25,11 @@ export const TourInclusions: React.FC<TourInclusionsProps> = ({
               Included
             </Typography>
             <ul>
-              {inclusions.inclusions.map((item, i) => (
-                <ListItem key={i}>{item}</ListItem>
-              ))}
+              {inclusions.inclusions
+                ? inclusions.inclusions.map((item, i) => (
+                    <ListItem key={i}>{item}</ListItem>
+                  ))
+                : null}
             </ul>
           </Grid>
           <Grid item xs={12} md={5}>
@@ -35,9 +37,11 @@ export const TourInclusions: React.FC<TourInclusionsProps> = ({
               Not Included
             </Typography>
             <ul>
-              {inclusions.exclusions.map((item, i) => (
-                <ListItem key={i}>{item}</ListItem>
-              ))}
+              {inclusions.exclusions
+                ? inclusions.exclusions.map((item, i) => (
+                    <ListItem key={i}>{item}</ListItem>
+                  ))
+                : null}
             </ul>
           </Grid>
         </Grid>
