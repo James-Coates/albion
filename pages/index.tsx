@@ -190,6 +190,7 @@ const Home: React.FC<LandingProps> = ({
 
 export async function getStaticProps(): Promise<{
   props: LandingProps;
+  revalidate: number;
 }> {
   const {
     mainHeading = 'Main Heading',
@@ -208,6 +209,7 @@ export async function getStaticProps(): Promise<{
       featureList,
       testimonials,
     },
+    revalidate: 20,
   };
 }
 
