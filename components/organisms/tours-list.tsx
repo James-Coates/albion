@@ -15,19 +15,21 @@ interface ToursListProps {
 export const ToursList: React.FC<ToursListProps> = ({ tours }) => {
   return (
     <Grid container spacing={4}>
-      {tours.map((tour) => (
-        <Grid item xs={12} md={6} key={tour._id}>
-          <FadeOnScroll>
-            <Box>
-              <Link href={`/tours/${tour.slug}`}>
-                <a>
-                  <TourCard tour={tour} />
-                </a>
-              </Link>
-            </Box>
-          </FadeOnScroll>
-        </Grid>
-      ))}
+      {tours
+        ? tours.map((tour) => (
+            <Grid item xs={12} md={6} key={tour._id}>
+              <FadeOnScroll>
+                <Box>
+                  <Link href={`/tours/${tour.slug}`}>
+                    <a>
+                      <TourCard tour={tour} />
+                    </a>
+                  </Link>
+                </Box>
+              </FadeOnScroll>
+            </Grid>
+          ))
+        : null}
     </Grid>
   );
 };
