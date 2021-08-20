@@ -76,6 +76,7 @@ export async function getStaticProps({ params }: Params) {
   const tour = await getTourFromSlug(params.slug);
   return {
     props: { tour },
+    revalidate: 10,
   };
 }
 

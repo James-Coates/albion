@@ -90,11 +90,13 @@ const Tours: React.FC<ToursProps> = ({ tours }) => {
 
 export async function getStaticProps(): Promise<{
   props: ToursProps;
+  revalidate: number;
 }> {
   const tours = await getAllTours();
 
   return {
     props: { tours },
+    revalidate: 10,
   };
 }
 

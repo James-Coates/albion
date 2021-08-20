@@ -209,7 +209,7 @@ export async function getStaticProps(): Promise<{
       featureList,
       testimonials,
     },
-    revalidate: 20,
+    revalidate: 10,
   };
 }
 

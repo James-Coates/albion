@@ -47,6 +47,15 @@ const GlobalStyle = createGlobalStyle<GlobalStyleProps>`
     position: relative;
   }
 
+ol {
+  list-style: decimal;
+  margin: 1em 0;
+  padding-left: 2em;
+  li {
+    padding-left: 0.5em;
+
+  }
+}
 `;
 
 export default GlobalStyle;
