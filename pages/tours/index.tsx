@@ -53,6 +53,8 @@ const Tours: React.FC<ToursProps> = ({ tours }) => {
     };
   }, []);
 
+  console.log(tours);
+
   return (
     <Layout>
       <Head>

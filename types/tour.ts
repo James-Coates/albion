@@ -12,6 +12,7 @@ export interface Tour {
   mainImage: SanityImageSource;
   price: number;
   destinations: string;
+  languages: string[];
   // availability: string;
   // slides?: Slide[];
   // mapData?: MapData;

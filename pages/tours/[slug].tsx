@@ -14,6 +14,7 @@ import { Tour } from '@type/tour';
 import { getAllTours, getTourFromSlug } from '@api/tours';
 import { urlFor } from 'sanity-client.config';
 import Head from 'next/head';
+import { TourPageLanguages } from '@components/organisms/tour-page-languages';
 
 interface TourPgaeProps {
   tour: Tour;
@@ -40,6 +41,7 @@ const TourPage: React.FC<TourPgaeProps> = ({ tour }) => {
         <title>{tour.title} - Albion Touring</title>
       </Head>
       <TourHero tour={tour} />
+
       {tour.gallery ? (
         <TourCarousel
           summary={tour.summary}
@@ -47,9 +49,15 @@ const TourPage: React.FC<TourPgaeProps> = ({ tour }) => {
           heading={tour.destinations}
         />
       ) : null}
+
       {tour.itinerary ? (
         <TourItinerary itinerary={tour.itinerary} />
       ) : null}
+
+      {tour.languages ? (
+        <TourPageLanguages languages={tour.languages} />
+      ) : null}
+
       {tour.inclusionsData ? (
         <TourInclusions inclusions={tour.inclusionsData} />
       ) : null}

@@ -11,6 +11,7 @@ const tourPostFields: string = `
   mainImage,
   summary,
   gallery,
+  languages,
   itinerary,
   inclusionsData
 `;
