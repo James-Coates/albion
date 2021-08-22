@@ -36,7 +36,9 @@ import Head from 'next/head';
 interface LandingProps {
   mainHeading: string;
   mainCopy?: BlockContentProps;
+  featuredToursIntro?: BlockContentProps;
   tours: Tour[];
+  featureListIntro?: BlockContentProps;
   featureList: Feature[];
   testimonials: Testimonial[];
 }
@@ -45,6 +47,8 @@ const Home: React.FC<LandingProps> = ({
   tours,
   mainHeading,
   mainCopy,
+  featuredToursIntro,
+  featureListIntro,
   featureList,
   testimonials,
 }) => {
@@ -99,15 +103,11 @@ const Home: React.FC<LandingProps> = ({
                   </Typography>
                 </SectionIntroHeading>
                 <SectionIntroCopy>
-                  <Typography variant="body1">
-                    Lorem ipsum dolor sit amet consectetur adipisicing
-                    elit. Laborum, soluta veritatis totam officiis qui
-                    recusandae aliquam nobis. Doloribus placeat veniam
-                    laudantium, laborum consequatur quis dolorum,
-                    nulla magni in ducimus ipsa accusamus perspiciatis
-                    nostrum quam iure tenetur nobis tempora,
-                    blanditiis rerum?
-                  </Typography>
+                  {featuredToursIntro ? (
+                    <BlockContent
+                      blocks={featuredToursIntro}
+                    ></BlockContent>
+                  ) : null}
 
                   <Box mt={4}>
                     <Link href="/tours">
@@ -134,14 +134,11 @@ const Home: React.FC<LandingProps> = ({
                 </Typography>
               </SectionIntroHeading>
               <SectionIntroCopy>
-                <Typography variant="body1">
-                  Lorem ipsum dolor sit amet consectetur adipisicing
-                  elit. Laborum, soluta veritatis totam officiis qui
-                  recusandae aliquam nobis. Doloribus placeat veniam
-                  laudantium, laborum consequatur quis dolorum, nulla
-                  magni in ducimus ipsa accusamus perspiciatis nostrum
-                  quam iure tenetur nobis tempora, blanditiis rerum?
-                </Typography>
+                {featureListIntro ? (
+                  <BlockContent
+                    blocks={featureListIntro}
+                  ></BlockContent>
+                ) : null}
               </SectionIntroCopy>
             </FadeOnScroll>
           </Container>
@@ -195,6 +192,8 @@ export async function getStaticProps(): Promise<{
   const {
     mainHeading = 'Main Heading',
     mainCopy = null,
+    featuredToursIntro = null,
+    featureListIntro = null,
     featuredTours = [],
     featureList = [],
     testimonials = [],
@@ -206,6 +205,8 @@ export async function getStaticProps(): Promise<{
       tours: featuredTours,
       mainHeading,
       mainCopy,
+      featuredToursIntro,
+      featureListIntro,
       featureList,
       testimonials,
     },

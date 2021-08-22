@@ -111,9 +111,11 @@ export const LandingHero: React.FC<LandingHeroProps> = ({
             {mainHeading}
           </Typography>
 
-          {mainCopy ? (
-            <BlockContent blocks={mainCopy}></BlockContent>
-          ) : null}
+          <Box maxWidth={540} margin="0 auto 64px">
+            {mainCopy ? (
+              <BlockContent blocks={mainCopy}></BlockContent>
+            ) : null}
+          </Box>
 
           <button onClick={handlePlayClick}>
             <PlayButton></PlayButton>

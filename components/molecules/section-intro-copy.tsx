@@ -6,7 +6,7 @@ export const SectionIntroCopy = styled.div`
     margin-bottom: ${theme.spacing(3)};
     ${theme.breakpoints.up('md')} {
       max-width: 35vw;
-      margin-left: 40vw;
+      margin-left: 30vw;
     }
   `}
 `;

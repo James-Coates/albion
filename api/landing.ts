@@ -9,6 +9,7 @@ export async function getLandingData() {
   const postFields = `
     mainHeading,
     mainCopy,
+    featuredToursIntro,
     "featuredTours": featuredTours[]->{
       _id,
       "slug": slug.current,
@@ -19,6 +20,7 @@ export async function getLandingData() {
       mainImage,
       summary,
     },
+    featureListIntro,
     "featureList": featureList[]->{
       heading,
       summary,
