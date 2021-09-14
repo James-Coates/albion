@@ -200,6 +200,12 @@ export async function getStaticProps(): Promise<{
   } = (await getLandingData()) || {};
   console.log(featuredTours);
 
+  const test = await fetch(
+    'https://albion.vercel.app/api/?name=email',
+  );
+
+  console.log(test);
+
   return {
     props: {
       tours: featuredTours,

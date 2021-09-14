@@ -22,6 +22,7 @@ const Contact: React.FC = () => {
 
   useEffect(() => {
     setHeaderFloat(true);
+
     return () => {
       setHeaderFloat(false);
     };

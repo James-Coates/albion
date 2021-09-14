@@ -12,18 +12,22 @@ import { Box, Container, Typography } from '@material-ui/core';
 
 import { ToursList } from '@components/organisms';
 import {
+  BlockContent,
+  BlockContentProps,
   Section,
   SectionIntroCopy,
   SectionIntroHeading,
 } from '@components/molecules';
 import { FadeOnScroll } from '@components/animations';
 import Head from 'next/head';
+import { getToursPageData } from '@api/tours-page';
 
 interface ToursProps {
   tours: Tour[];
+  intro: BlockContentProps;
 }
 
-const Tours: React.FC<ToursProps> = ({ tours }) => {
+const Tours: React.FC<ToursProps> = ({ tours, intro }) => {
   const dispatch = useLayoutDispatch();
 
   const setHeaderFloat = (float: boolean): void =>
@@ -53,7 +57,7 @@ const Tours: React.FC<ToursProps> = ({ tours }) => {
     };
   }, []);
 
-  console.log(tours);
+  console.log(intro);
 
   return (
     <Layout>
@@ -69,16 +73,11 @@ const Tours: React.FC<ToursProps> = ({ tours }) => {
                   Our Tours
                 </Typography>
               </SectionIntroHeading>
-              <SectionIntroCopy>
-                <Typography variant="body1">
-                  Lorem ipsum dolor sit amet consectetur adipisicing
-                  elit. Laborum, soluta veritatis totam officiis qui
-                  recusandae aliquam nobis. Doloribus placeat veniam
-                  laudantium, laborum consequatur quis dolorum, nulla
-                  magni in ducimus ipsa accusamus perspiciatis nostrum
-                  quam iure tenetur nobis tempora, blanditiis rerum?
-                </Typography>
-              </SectionIntroCopy>
+              {intro ? (
+                <SectionIntroCopy>
+                  <BlockContent blocks={intro}></BlockContent>
+                </SectionIntroCopy>
+              ) : null}
             </FadeOnScroll>
             <Box my="12vh">
               <ToursList tours={tours} />
@@ -96,8 +95,10 @@ export async function getStaticProps(): Promise<{
 }> {
   const tours = await getAllTours();
 
+  const { intro } = await getToursPageData();
+
   return {
-    props: { tours },
+    props: { tours, intro },
     revalidate: 10,
   };
 }
