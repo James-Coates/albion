@@ -4,9 +4,7 @@ const sgTransport = require('nodemailer-sendgrid-transport');
 const sgMail = require('@sendgrid/mail');
 
 module.exports = async (req: any, res: any) => {
-  sgMail.setApiKey(
-    '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',
-  );
+  sgMail.setApiKey(process.env.SEND_GRID_API_KEY);
 
   const data = JSON.parse(req.body);
 
