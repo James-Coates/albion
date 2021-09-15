@@ -47,9 +47,9 @@ const Contact: React.FC = () => {
           </SectionIntroHeading>
           <SectionIntroCopy>
             <Typography variant="subtitle1">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Eius repellendus cum non eaque a quod in exercitationem
-              deleniti voluptates officiis.
+              If you have any queries please dont hesitate to contact
+              us using the form below. Drop us a message and we will
+              get back to you as soon as possible.
             </Typography>
           </SectionIntroCopy>
         </Container>
