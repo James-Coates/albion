@@ -78,8 +78,6 @@ const Home: React.FC<LandingProps> = ({
     setHeaderFloat(false);
   }, []);
 
-  console.log(testimonials);
-
   return (
     <div>
       <Head>
@@ -198,13 +196,6 @@ export async function getStaticProps(): Promise<{
     featureList = [],
     testimonials = [],
   } = (await getLandingData()) || {};
-  console.log(featuredTours);
-
-  const test = await fetch(
-    'https://albion.vercel.app/api/?name=email',
-  );
-
-  console.log(test);
 
   return {
     props: {

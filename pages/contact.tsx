@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Layout } from '@components/layouts';
-import { Box, Container, Grid, Typography } from '@material-ui/core';
+import {
+  Alert,
+  Box,
+  Container,
+  Grid,
+  Typography,
+} from '@material-ui/core';
 import { useLayoutDispatch } from '@state/layout/layout-state';
 import {
   ContactForm,
@@ -9,6 +15,7 @@ import {
   SectionIntroHeading,
 } from '@components/molecules';
 import Head from 'next/head';
+import { Snackbar } from 'material-ui';
 
 const Contact: React.FC = () => {
   const dispatch = useLayoutDispatch();
