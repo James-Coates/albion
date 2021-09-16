@@ -1,6 +1,3 @@
-const nodemailer = require('nodemailer');
-const sgTransport = require('nodemailer-sendgrid-transport');
-
 const sgMail = require('@sendgrid/mail');
 
 module.exports = async (req: any, res: any) => {

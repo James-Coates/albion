@@ -42,7 +42,7 @@ export const ContactForm: React.FC = () => {
 
   const onSubmit = async (formData: any) => {
     setDisabled(true);
-    const test = await fetch(`${process.env.API_BASE_URL}api/email`, {
+    const test = await fetch(`/api/email`, {
       method: 'POST',
       body: JSON.stringify(formData),
     });
