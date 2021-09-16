@@ -8,7 +8,17 @@ import NextDocument, {
 import { ServerStyleSheet as StyledComponentSheets } from 'styled-components';
 import { ServerStyleSheets as MaterialUiServerStyleSheets } from '@material-ui/styles';
 
+declare var dataLayer: any;
+
 export default class Document extends NextDocument {
+  anaylticsScript = `
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', ${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS});
+  `;
+
   static async getInitialProps(ctx: any) {
     const styledComponentSheet = new StyledComponentSheets();
     const materialUiSheets = new MaterialUiServerStyleSheets();
@@ -43,7 +53,20 @@ export default class Document extends NextDocument {
   render() {
     return (
       <Html>
-        <Head />
+        <Head>
+          <script
+            async
+            src={
+              'https://www.googletagmanager.com/gtag/js?id=' +
+              process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS
+            }
+          ></script>
+          <script
+            dangerouslySetInnerHTML={{
+              __html: this.anaylticsScript,
+            }}
+          ></script>
+        </Head>
         <body>
           <Main />
           <div id="mobile-menu-root"></div>

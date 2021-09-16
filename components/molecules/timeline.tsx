@@ -165,7 +165,9 @@ export const Timeline: FC<TimelineProps> = ({
               {item.image ? (
                 <Box pt="55%" position="relative" mb={4}>
                   <Image
-                    src={urlFor(item.image).url() || ''}
+                    src={
+                      urlFor(item.image).size(512, 587).url() || ''
+                    }
                     layout="fill"
                     objectFit="cover"
                   ></Image>

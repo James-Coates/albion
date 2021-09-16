@@ -90,7 +90,10 @@ export const Testimonials: React.FC<TestimonialsProps> = ({
           <SwiperSlide key={i}>
             <TestimonialSlide>
               <BackgroundImage
-                src={urlFor(testimonial.image).url() || ''}
+                src={
+                  urlFor(testimonial.image).size(1800, 750).url() ||
+                  ''
+                }
                 objectFit="cover"
                 zIndex={-2}
               />
